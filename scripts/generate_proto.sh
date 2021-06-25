@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Define variables
-OUT=lib/proto
+OUT=lib/src/proto
 PROTO=proto
 THIRD_PARTY=third_party
 

@@ -2,6 +2,8 @@
 
 A library for Dart developers.
 
+To generate Protobuf file implementations => `./scripts/generate_proto.sh`
+
 ## Usage
 
 A simple usage example:
