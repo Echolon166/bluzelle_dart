@@ -24,4 +24,5 @@ done
 find "$OUT" -name "*.pbserver.dart" -type f -delete
 
 # Delete unnecessary folders
+rm -rf "$PROTO"
 rm -rf "$THIRD_PARTY"
