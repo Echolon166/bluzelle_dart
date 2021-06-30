@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
 # Define variables
-OUT=lib/src/proto
+OUT=lib/src/codec
 PROTO=proto
-THIRD_PARTY=third_party
 
 # Get the missing Protobuf types files
-sh ./scripts/get_proto.sh "$PROTO" "$THIRD_PARTY"
+sh ./scripts/get_proto.sh "$PROTO"
 
 # Create required folders
 rm -r -f "$OUT"
 mkdir -p "$OUT"
 
 # Generate the Protobuf implementation
-PROTOC="protoc --dart_out=$OUT -I$THIRD_PARTY/proto"
+PROTOC="protoc --dart_out=$OUT -I$PROTO"
 proto_dirs=$(find "$PROTO" -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
 for dir in $proto_dirs; do
   $PROTOC -I$PROTO \
@@ -23,9 +22,8 @@ done
 # Remove all .pbserver.dart files as they are unnecessary
 find "$OUT" -name "*.pbserver.dart" -type f -delete
 
-# Delete unnecessary folders
+# Delete no longer required Protobuf folders
 rm -rf "$PROTO"
-rm -rf "$THIRD_PARTY"
 
 # Generate exports
 sh ./scripts/generate_exports.sh "$OUT"
