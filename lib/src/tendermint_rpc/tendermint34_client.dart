@@ -21,7 +21,7 @@ class Tendermint34Client extends pb.RpcClient {
   ///   Ex: wss://localhost:26657/websocket
   static Future<Tendermint34Client> connect(String url) async {
     if (url.startsWith('http://') || url.startsWith('https://')) {
-      url = url.replaceFirst(RegExp(r'[^:]*'), 'wss');
+      url = url.replaceFirst(RegExp(r'http'), 'ws');
       url += '/websocket';
     }
 
