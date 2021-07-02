@@ -3,6 +3,4 @@
 /// More dartdocs go here.
 library bluzelle_dart;
 
-//export 'src/bluzelle_dart_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/bluzelle_sdk/bluzelle_sdk.dart' show bluzelle;
