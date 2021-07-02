@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bluzelle_dart/src/tendermint_rpc/requests.dart' as requests;
 import 'package:bluzelle_dart/src/utils.dart' show unawaited;
+import 'package:convert/convert.dart' show hex;
 import 'package:fixnum/fixnum.dart';
 import 'package:json_rpc_2/json_rpc_2.dart' as rpc;
 import 'package:protobuf/protobuf.dart' as pb;
@@ -79,7 +81,13 @@ class Tendermint34Client extends pb.RpcClient {
     pb.GeneratedMessage request,
     T emptyResponse,
   ) async {
-    final payload = request.toProto3Json();
+    Map<String, dynamic> payload =
+        request.toProto3Json() as Map<String, dynamic>;
+
+    if (methodName == requests.Method.abciQuery.rawValue) {
+      final decodedData = base64Decode(payload["data"]);
+      payload["data"] = hex.encode(decodedData);
+    }
 
     await _client.sendRequest(methodName, payload).then(
           (result) => emptyResponse.mergeFromProto3Json(result["response"]),
@@ -90,7 +98,7 @@ class Tendermint34Client extends pb.RpcClient {
 
   Future<abci.ResponseInfo> abciInfo() async => await invoke(
         null,
-        'tendermint_abci',
+        'ABCIApplication',
         requests.Method.abciInfo.rawValue,
         abci.RequestInfo.create(),
         abci.ResponseInfo(),
@@ -104,7 +112,7 @@ class Tendermint34Client extends pb.RpcClient {
   }) async =>
       await invoke(
         null,
-        'tendermint_abci',
+        'ABCIApplication',
         requests.Method.abciQuery.rawValue,
         abci.RequestQuery(
           path: path,
