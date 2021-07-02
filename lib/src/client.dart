@@ -1,11 +1,11 @@
 import 'package:bluzelle_dart/src/tendermint_rpc/tendermint34_client.dart';
 import 'package:protobuf/protobuf.dart' as pb;
 
-abstract class BluzelleClient extends pb.RpcClient {
+abstract class Client extends pb.RpcClient {
   abstract final Tendermint34Client tmClient;
 }
 
-class QueryClient implements BluzelleClient {
+class QueryClient implements Client {
   @override
   final Tendermint34Client tmClient;
 
