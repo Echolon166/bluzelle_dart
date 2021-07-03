@@ -1,15 +1,20 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:bluzelle_dart/src/tendermint_rpc/requests.dart' as requests;
-import 'package:bluzelle_dart/src/utils.dart' show unawaited;
+// Package imports:
 import 'package:convert/convert.dart' show hex;
-import 'package:fixnum/fixnum.dart';
+import 'package:fixnum/fixnum.dart' show Int64;
 import 'package:json_rpc_2/json_rpc_2.dart' as rpc;
 import 'package:protobuf/protobuf.dart' as pb;
 import 'package:web_socket_channel/web_socket_channel.dart' as ws;
 
-import 'package:bluzelle_dart/src/codec/tendermint/abci/export.dart' as abci;
+// Project imports:
+import 'package:bluzelle_dart/src/types/export.dart';
+import 'package:bluzelle_dart/src/utils.dart';
+
+import 'package:bluzelle_dart/src/tendermint_rpc/requests/requests.dart'
+    as requests;
 
 class Tendermint34Client extends pb.RpcClient {
   final rpc.Client _client;
@@ -96,15 +101,15 @@ class Tendermint34Client extends pb.RpcClient {
     return emptyResponse;
   }
 
-  Future<abci.ResponseInfo> abciInfo() async => await invoke(
+  Future<ResponseInfo> abciInfo() async => await invoke(
         null,
         'ABCIApplication',
         requests.Method.abciInfo.rawValue,
-        abci.RequestInfo.create(),
-        abci.ResponseInfo(),
+        RequestInfo.create(),
+        ResponseInfo(),
       );
 
-  Future<abci.ResponseQuery> abciQuery({
+  Future<ResponseQuery> abciQuery({
     required String path,
     required Uint8List data,
     Int64? height,
@@ -114,12 +119,12 @@ class Tendermint34Client extends pb.RpcClient {
         null,
         'ABCIApplication',
         requests.Method.abciQuery.rawValue,
-        abci.RequestQuery(
+        RequestQuery(
           path: path,
           data: data,
           height: height,
           prove: prove,
         ),
-        abci.ResponseQuery(),
+        ResponseQuery(),
       );
 }

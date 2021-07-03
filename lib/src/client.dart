@@ -1,8 +1,13 @@
-import 'package:bluzelle_dart/src/tendermint_rpc/tendermint34_client.dart';
+// Package imports:
 import 'package:protobuf/protobuf.dart' as pb;
+
+// Project imports:
+import 'package:bluzelle_dart/src/tendermint_rpc/tendermint34_client.dart';
 
 abstract class Client extends pb.RpcClient {
   abstract final Tendermint34Client tmClient;
+
+  void close();
 }
 
 class QueryClient implements Client {
@@ -18,6 +23,7 @@ class QueryClient implements Client {
     return QueryClient(newTmClient);
   }
 
+  @override
   void close() {
     tmClient.close();
   }
@@ -30,12 +36,11 @@ class QueryClient implements Client {
     pb.GeneratedMessage request,
     T emptyResponse,
   ) async {
-    final qualifiedMessageName = request.info_.qualifiedMessageName;
-    final packageName = qualifiedMessageName.substring(
-      0,
-      qualifiedMessageName.lastIndexOf('.'),
+    String path = derivePath(
+      serviceName: serviceName,
+      methodName: methodName,
+      request: request,
     );
-    final path = '/$packageName.$serviceName/$methodName';
 
     await tmClient
         .abciQuery(
@@ -46,4 +51,18 @@ class QueryClient implements Client {
 
     return emptyResponse;
   }
+}
+
+String derivePath({
+  required String serviceName,
+  required String methodName,
+  required pb.GeneratedMessage request,
+}) {
+  final qualifiedMessageName = request.info_.qualifiedMessageName;
+  final packageName = qualifiedMessageName.substring(
+    0,
+    qualifiedMessageName.lastIndexOf('.'),
+  );
+
+  return '/$packageName.$serviceName/$methodName';
 }
