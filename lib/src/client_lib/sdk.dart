@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:bluzelle_dart/src/client.dart';
+import 'package:bluzelle_dart/src/client_lib/export.dart';
 
 class SdkOptions {
   String? mnemonic;

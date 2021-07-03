@@ -5,17 +5,18 @@ import 'package:protobuf/protobuf.dart' as pb;
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 
 abstract class Client extends pb.RpcClient {
-  abstract final Tendermint34Client tmClient;
+  // ignore: unused_field
+  abstract final Tendermint34Client _tmClient;
 
   void close();
 }
 
 class QueryClient implements Client {
   @override
-  final Tendermint34Client tmClient;
+  final Tendermint34Client _tmClient;
 
   /// Use [QueryClient.connect] to create an instance along with a Tendermint34Client instance.
-  QueryClient(this.tmClient);
+  QueryClient(Tendermint34Client tmClient) : _tmClient = tmClient;
 
   static Future<QueryClient> connect(String url) async {
     final newTmClient = await Tendermint34Client.connect(url);
@@ -25,7 +26,7 @@ class QueryClient implements Client {
 
   @override
   void close() {
-    tmClient.close();
+    _tmClient.close();
   }
 
   @override
@@ -42,7 +43,7 @@ class QueryClient implements Client {
       request: request,
     );
 
-    await tmClient
+    await _tmClient
         .abciQuery(
           path: path,
           data: request.writeToBuffer(),
