@@ -2,7 +2,7 @@
 ///
 /// Enum raw value must match the spelling in the "shell" example call (snake_case)
 
-enum Method {
+enum RequestMethod {
   abciInfo,
   abciQuery,
   block,
@@ -23,44 +23,44 @@ enum Method {
   unsubscribe,
 }
 
-extension MethodExtension on Method {
+extension RequestMethodExtension on RequestMethod {
   String get rawValue {
     switch (this) {
-      case Method.abciInfo:
+      case RequestMethod.abciInfo:
         return 'abci_info';
-      case Method.abciQuery:
+      case RequestMethod.abciQuery:
         return 'abci_query';
-      case Method.block:
+      case RequestMethod.block:
         return 'block';
-      case Method.blockchain:
+      case RequestMethod.blockchain:
         return 'blockchain';
-      case Method.blockResults:
+      case RequestMethod.blockResults:
         return 'block_results';
-      case Method.blockSearch:
+      case RequestMethod.blockSearch:
         return 'block_search';
-      case Method.broadcastTxAsync:
+      case RequestMethod.broadcastTxAsync:
         return 'broadcast_tx_async';
-      case Method.broadcastTxSync:
+      case RequestMethod.broadcastTxSync:
         return 'broadcast_tx_sync';
-      case Method.broadcastTxCommit:
+      case RequestMethod.broadcastTxCommit:
         return 'broadcast_tx_commit';
-      case Method.commit:
+      case RequestMethod.commit:
         return 'commit';
-      case Method.genesis:
+      case RequestMethod.genesis:
         return 'genesis';
-      case Method.health:
+      case RequestMethod.health:
         return 'health';
-      case Method.status:
+      case RequestMethod.status:
         return 'status';
-      case Method.subscribe:
+      case RequestMethod.subscribe:
         return 'subscribe';
-      case Method.tx:
+      case RequestMethod.tx:
         return 'tx';
-      case Method.txSearch:
+      case RequestMethod.txSearch:
         return 'tx_search';
-      case Method.validators:
+      case RequestMethod.validators:
         return 'validators';
-      case Method.unsubscribe:
+      case RequestMethod.unsubscribe:
         return 'unsubscribe';
       default:
         return '';

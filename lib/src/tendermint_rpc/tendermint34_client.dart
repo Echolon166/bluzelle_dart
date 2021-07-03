@@ -10,11 +10,9 @@ import 'package:protobuf/protobuf.dart' as pb;
 import 'package:web_socket_channel/web_socket_channel.dart' as ws;
 
 // Project imports:
+import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
 import 'package:bluzelle_dart/src/utils.dart';
-
-import 'package:bluzelle_dart/src/tendermint_rpc/requests/requests.dart'
-    as requests;
 
 class Tendermint34Client extends pb.RpcClient {
   final rpc.Client _client;
@@ -54,7 +52,7 @@ class Tendermint34Client extends pb.RpcClient {
   }
 
   static Future<String> detectVersion(rpc.Client client) async {
-    final request = requests.Method.status.rawValue;
+    final request = RequestMethod.status.rawValue;
     final result = await client.sendRequest(request);
 
     if (result == null || result['node_info'] == null) {
@@ -89,7 +87,7 @@ class Tendermint34Client extends pb.RpcClient {
     Map<String, dynamic> payload =
         request.toProto3Json() as Map<String, dynamic>;
 
-    if (methodName == requests.Method.abciQuery.rawValue) {
+    if (methodName == RequestMethod.abciQuery.rawValue) {
       final decodedData = base64Decode(payload["data"]);
       payload["data"] = hex.encode(decodedData);
     }
@@ -104,7 +102,7 @@ class Tendermint34Client extends pb.RpcClient {
   Future<ResponseInfo> abciInfo() async => await invoke(
         null,
         'ABCIApplication',
-        requests.Method.abciInfo.rawValue,
+        RequestMethod.abciInfo.rawValue,
         RequestInfo.create(),
         ResponseInfo(),
       );
@@ -118,7 +116,7 @@ class Tendermint34Client extends pb.RpcClient {
       await invoke(
         null,
         'ABCIApplication',
-        requests.Method.abciQuery.rawValue,
+        RequestMethod.abciQuery.rawValue,
         RequestQuery(
           path: path,
           data: data,
@@ -127,4 +125,11 @@ class Tendermint34Client extends pb.RpcClient {
         ),
         ResponseQuery(),
       );
+
+  Future<StatusResponse> status() async {
+    final request = RequestMethod.status.rawValue;
+    final result = await _client.sendRequest(request);
+
+    return StatusResponse.fromJson(result);
+  }
 }

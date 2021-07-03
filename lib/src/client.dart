@@ -2,7 +2,7 @@
 import 'package:protobuf/protobuf.dart' as pb;
 
 // Project imports:
-import 'package:bluzelle_dart/src/tendermint_rpc/tendermint34_client.dart';
+import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 
 abstract class Client extends pb.RpcClient {
   abstract final Tendermint34Client tmClient;
