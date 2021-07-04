@@ -1,3 +1,6 @@
+export 'any.pb.dart';
+export 'any.pbenum.dart';
+export 'any.pbjson.dart';
 export 'descriptor.pb.dart';
 export 'descriptor.pbenum.dart';
 export 'descriptor.pbjson.dart';

@@ -86,6 +86,7 @@ class Gogo {
   static final stdtime = $pb.Extension<$core.bool>(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'google.protobuf.FieldOptions', const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stdtime', 65010, $pb.PbFieldType.OB);
   static final stdduration = $pb.Extension<$core.bool>(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'google.protobuf.FieldOptions', const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stdduration', 65011, $pb.PbFieldType.OB);
   static final wktpointer = $pb.Extension<$core.bool>(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'google.protobuf.FieldOptions', const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wktpointer', 65012, $pb.PbFieldType.OB);
+  static final castrepeated = $pb.Extension<$core.String>(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'google.protobuf.FieldOptions', const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'castrepeated', 65013, $pb.PbFieldType.OS);
   static void registerAllExtensions($pb.ExtensionRegistry registry) {
     registry.add(goprotoEnumPrefix);
     registry.add(goprotoEnumStringer);
@@ -163,6 +164,7 @@ class Gogo {
     registry.add(stdtime);
     registry.add(stdduration);
     registry.add(wktpointer);
+    registry.add(castrepeated);
   }
 }
 
