@@ -12,19 +12,24 @@ import 'package:web_socket_channel/web_socket_channel.dart' as ws;
 // Project imports:
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/utils.dart';
+import 'package:bluzelle_dart/src/utils/export.dart';
 
 class Tendermint34Client extends pb.RpcClient {
   final rpc.Client _client;
 
-  /// Use `Tendermint34Client.connect` or `Tendermint34Client.create` to create an instance.
   Tendermint34Client(this._client);
 
-  /// Creates a new Tendermint client for the given endpoint.
+  /// Creates a new [Tendermint34Client] instance for given host and port.
   ///
-  /// Uses WebSockets, if given URL schema is http or https, converts it to Tendermint WebSockets schema.
-  ///   Ex: wss://localhost:26657/websocket
-  static Future<Tendermint34Client> connect(String url) async {
+  /// Uses WebSockets, if given host URL schema is http or https, converts it
+  ///   to Tendermint WebSockets schema.
+  /// Ex: wss://localhost:26657/websocket
+  factory Tendermint34Client.connect({
+    required String host,
+    required int port,
+  }) {
+    var url = '$host:${port.toString()}';
+
     if (url.startsWith('http://') || url.startsWith('https://')) {
       url = url.replaceFirst(RegExp(r'http'), 'ws');
       url += '/websocket';
@@ -33,49 +38,21 @@ class Tendermint34Client extends pb.RpcClient {
     final socket = ws.WebSocketChannel.connect(Uri.parse(url));
     final client = rpc.Client(socket.cast<String>());
 
-    return await Tendermint34Client.create(client);
-  }
-
-  /// Creates a new Tendermint client given an RPC client.
-  static Future<Tendermint34Client> create(rpc.Client client) async {
     // Subscribes to the input stream.
     // The returned Future won't complete until the connection is closed.
     unawaited(client.listen());
 
-    // We query the version as a way to say "hi" to the backend,
-    //  even in cases where we don't use to result to prevent possible error
-    //  when skipping the status call before doing other queries.
-    // ignore: unused_local_variable
-    final _version = await detectVersion(client);
-
     return Tendermint34Client(client);
   }
 
-  static Future<String> detectVersion(rpc.Client client) async {
-    final request = RequestMethod.status.rawValue;
-    final result = await client.sendRequest(request);
-
-    if (result == null || result['node_info'] == null) {
-      throw 'Unrecognized format for status response.';
-    }
-
-    final version = result['node_info']['version'];
-
-    if (version is! String) {
-      throw 'Unrecognized version format: Must be string.';
-    }
-
-    return version;
-  }
-
+  /// Closes the rpc connection of the [Tendermint34Client].
   void close() {
     _client.close();
   }
 
   /// Sends a request to a server and returns the reply.
-  ///
-  /// Serializes the request as Json.
-  /// It merges the reply into [emptyResponse] and returns it.
+  /// Serializes the request as Json. Merges the reply into [emptyResponse]
+  ///   and returns it.
   @override
   Future<T> invoke<T extends pb.GeneratedMessage>(
     pb.ClientContext? ctx,

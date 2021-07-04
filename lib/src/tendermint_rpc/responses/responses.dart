@@ -1,11 +1,12 @@
 // Package imports:
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'responses.g.dart';
 
 /// Response only consists of nodeInfo.network as the rest is not required for now.
 @JsonSerializable(explicitToJson: true)
-class StatusResponse {
+class StatusResponse extends Equatable {
   @JsonKey(name: 'node_info')
   final NodeInfo nodeInfo;
 
@@ -18,10 +19,15 @@ class StatusResponse {
   Map<String, dynamic> toJson() {
     return _$StatusResponseToJson(this);
   }
+
+  @override
+  List<Object> get props {
+    return [nodeInfo];
+  }
 }
 
 @JsonSerializable(explicitToJson: true)
-class NodeInfo {
+class NodeInfo extends Equatable {
   @JsonKey(name: 'network')
   final String network;
 
@@ -33,5 +39,10 @@ class NodeInfo {
 
   Map<String, dynamic> toJson() {
     return _$NodeInfoToJson(this);
+  }
+
+  @override
+  List<Object> get props {
+    return [network];
   }
 }

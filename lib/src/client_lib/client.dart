@@ -6,27 +6,34 @@ import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 
 abstract class Client extends pb.RpcClient {
   // ignore: unused_field
-  abstract final Tendermint34Client _tmClient;
+  abstract final Tendermint34Client _tendermint34Client;
 
   void close();
 }
 
 class QueryClient implements Client {
   @override
-  final Tendermint34Client _tmClient;
+  final Tendermint34Client _tendermint34Client;
 
-  /// Use [QueryClient.connect] to create an instance along with a Tendermint34Client instance.
-  QueryClient(Tendermint34Client tmClient) : _tmClient = tmClient;
+  QueryClient(Tendermint34Client tendermint34Client)
+      : _tendermint34Client = tendermint34Client;
 
-  static Future<QueryClient> connect(String url) async {
-    final newTmClient = await Tendermint34Client.connect(url);
+  /// Creates a [QueryClient] instance along with a [Tendermint34Client] instance.
+  factory QueryClient.connect({
+    required String host,
+    required int port,
+  }) {
+    final newTendermint34Client = Tendermint34Client.connect(
+      host: host,
+      port: port,
+    );
 
-    return QueryClient(newTmClient);
+    return QueryClient(newTendermint34Client);
   }
 
   @override
   void close() {
-    _tmClient.close();
+    _tendermint34Client.close();
   }
 
   @override
@@ -43,7 +50,7 @@ class QueryClient implements Client {
       request: request,
     );
 
-    await _tmClient
+    await _tendermint34Client
         .abciQuery(
           path: path,
           data: request.writeToBuffer(),

@@ -4,6 +4,7 @@ import 'package:protobuf/protobuf.dart' as pb;
 // Project imports:
 import 'package:bluzelle_dart/src/client_lib/export.dart';
 import 'package:bluzelle_dart/src/codec/crud/export.dart' as crud;
+import 'package:bluzelle_dart/src/wallet/export.dart';
 
 typedef DatabaseSdk = Sdk<crud.QueryApi, crud.MsgApi>;
 
@@ -13,20 +14,18 @@ class BluzelleSdk {
   BluzelleSdk({required this.db});
 }
 
-Future<BluzelleSdk> bluzelle({
-  required String? mnemonic,
-  required String url,
+BluzelleSdk bluzelle({
+  required Wallet wallet,
   required int maxGas,
   required double gasPrice,
-}) async {
+}) {
   final options = SdkOptions(
-    mnemonic: mnemonic,
-    url: url,
+    wallet: wallet,
     maxGas: maxGas,
     gasPrice: gasPrice,
   );
 
-  final DatabaseSdk db = await sdk<crud.QueryApi, crud.MsgApi>(
+  final DatabaseSdk db = sdk<crud.QueryApi, crud.MsgApi>(
     options: options,
     qApi: newCrudQueryApi,
     //mApi: newCrudMsgApi(rpc),
