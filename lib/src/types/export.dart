@@ -12,4 +12,5 @@ export 'package:bluzelle_dart/src/codec/crud/export.dart'
         QueryServiceBase$messageJson;
 export 'package:bluzelle_dart/src/codec/tendermint/abci/export.dart';
 
+export 'ext_bigint.dart';
 export 'ext_int.dart';

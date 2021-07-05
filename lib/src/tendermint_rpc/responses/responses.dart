@@ -4,7 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'responses.g.dart';
 
-/// Response only consists of nodeInfo.network as the rest is not required for now.
+/// [StatusResponse] only consists of [NodeInfo.network] as the rest is not
+///   required for now. Add rest of the variables if required.
 @JsonSerializable(explicitToJson: true)
 class StatusResponse extends Equatable {
   @JsonKey(name: 'node_info')

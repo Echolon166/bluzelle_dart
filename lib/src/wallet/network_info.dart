@@ -74,9 +74,11 @@ class NetworkInfo extends Equatable {
 
   /// Creates a [NetworkInfo] instance using given [host].
   factory NetworkInfo.fromHost({
+    String? hrp,
     required String host,
   }) {
     return NetworkInfo(
+      bech32Hrp: hrp ?? 'bluzelle',
       tendermintRpcInfo: TendermintRpcInfo(
         host: host,
       ),
@@ -85,10 +87,12 @@ class NetworkInfo extends Equatable {
 
   /// Creates a [NetworkInfo] instance using given [host] and [port].
   factory NetworkInfo.fromHostAndPort({
+    String? hrp,
     required String host,
     required int port,
   }) {
     return NetworkInfo(
+      bech32Hrp: hrp ?? 'bluzelle',
       tendermintRpcInfo: TendermintRpcInfo(
         host: host,
         port: port,

@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:bluzelle_dart/src/wallet/export.dart';
 import 'package:protobuf/protobuf.dart' as pb;
 
 // Project imports:
@@ -11,6 +12,10 @@ abstract class Client extends pb.RpcClient {
   void close();
 }
 
+/// [QueryClient] acts as a bridge between custom [pb.GeneratedMessage] type
+///   requests and [Tendermint34Client.abciQuery].
+/// Request's path will be derived from its info, and an abciQuery will be sent
+///   using derived path and request's bytes.
 class QueryClient implements Client {
   @override
   final Tendermint34Client _tendermint34Client;
@@ -29,6 +34,11 @@ class QueryClient implements Client {
     );
 
     return QueryClient(newTendermint34Client);
+  }
+
+  /// Creates a [QueryClient] instance from given [NetworkInfo] instance.
+  factory QueryClient.fromNetworkInfo(NetworkInfo info) {
+    return QueryClient(info.tendermint34Client);
   }
 
   @override
@@ -61,6 +71,7 @@ class QueryClient implements Client {
   }
 }
 
+/// Derive required path using [request]'s info.
 String derivePath({
   required String serviceName,
   required String methodName,

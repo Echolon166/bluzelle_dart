@@ -11,6 +11,7 @@ import 'package:pointycastle/export.dart' as pc;
 import 'package:bluzelle_dart/src/utils/export.dart';
 import 'package:bluzelle_dart/src/wallet/bech32_encoder.dart';
 import 'package:bluzelle_dart/src/wallet/export.dart';
+import 'package:bluzelle_dart/src/types/export.dart';
 
 /// Represents a wallet which contains the hex address, the hex private key
 ///   and the hex public key.
@@ -140,6 +141,49 @@ class Wallet extends Equatable {
     final curvePoint = point * _ecPrivateKey.d;
 
     return pc.ECPublicKey(curvePoint, pc.ECCurve_secp256k1());
+  }
+
+  /// Normalized the given [signature] using the provided [curveParams].
+  /// This is used to create signatures that are always in the lower-S form,
+  ///   to make sure that they cannot be tamped with the alternative S value.
+  /// More info can be found here: https://tinyurl.com/2yfurry7
+  pc.ECSignature _normalizeECSignature(
+    pc.ECSignature signature,
+    pc.ECDomainParameters curveParams,
+  ) {
+    var normalizedS = signature.s;
+    if (normalizedS.compareTo(curveParams.n >> 1) > 0) {
+      normalizedS = curveParams.n - normalizedS;
+    }
+
+    return pc.ECSignature(signature.r, normalizedS);
+  }
+
+  /// Hashes the given [data] with SHA-256, and then sign the hash using the
+  ///   private key associated with this wallet, returning the signature
+  ///   encoded as a 64 bytes array.
+  Uint8List sign(Uint8List data) {
+    final hash = pc.SHA256Digest().process(data);
+    final ecdsaSigner = pc.ECDSASigner(null, pc.HMac(pc.SHA256Digest(), 64))
+      ..init(
+        true,
+        pc.PrivateKeyParameter(_ecPrivateKey),
+      );
+
+    final ecSignature = ecdsaSigner.generateSignature(hash) as pc.ECSignature;
+    final normalized = _normalizeECSignature(
+      ecSignature,
+      pc.ECCurve_secp256k1(),
+    );
+    final rBytes = normalized.r.toUint8List();
+    final sBytes = normalized.s.toUint8List();
+
+    var sigBytes = Uint8List(64);
+
+    copy(rBytes, 32 - rBytes.length, 32, sigBytes);
+    copy(sBytes, 64 - sBytes.length, 64, sigBytes);
+
+    return sigBytes;
   }
 
   /// Converts the current [Wallet] instance into a JSON object.
