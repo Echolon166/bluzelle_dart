@@ -1,9 +1,9 @@
 // Package imports:
-import 'package:bluzelle_dart/src/wallet/export.dart';
 import 'package:protobuf/protobuf.dart' as pb;
 
 // Project imports:
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
+import 'package:bluzelle_dart/src/wallet/export.dart';
 
 abstract class Client extends pb.RpcClient {
   // ignore: unused_field

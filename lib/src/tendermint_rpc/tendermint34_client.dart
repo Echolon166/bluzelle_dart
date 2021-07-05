@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 // Package imports:
 import 'package:convert/convert.dart' show hex;
-import 'package:fixnum/fixnum.dart' show Int64;
+import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:json_rpc_2/json_rpc_2.dart' as rpc;
 import 'package:protobuf/protobuf.dart' as pb;
 import 'package:web_socket_channel/web_socket_channel.dart' as ws;
@@ -80,14 +80,14 @@ class Tendermint34Client extends pb.RpcClient {
         null,
         'ABCIApplication',
         RequestMethod.abciInfo.rawValue,
-        RequestInfo.create(),
+        RequestInfo(),
         ResponseInfo(),
       );
 
   Future<ResponseQuery> abciQuery({
     required String path,
     required Uint8List data,
-    Int64? height,
+    fixnum.Int64? height,
     bool? prove,
   }) async =>
       await invoke(
