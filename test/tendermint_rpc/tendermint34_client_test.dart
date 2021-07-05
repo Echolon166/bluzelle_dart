@@ -58,4 +58,18 @@ void main() {
 
     expect(status.nodeInfo.network, 'test');
   });
+
+  test('broadcastTxSync() works properly.', () async {
+    final tx = Uint8List.fromList([1, 2, 3]);
+    final hash = Uint8List.fromList([4, 5, 6]);
+    when(tendermint34Client.broadcastTxSync(tx)).thenAnswer(
+      (_) => Future.value(
+        BroadcastTxSyncResponse(hash: hash),
+      ),
+    );
+
+    final response = await tendermint34Client.broadcastTxSync(tx);
+
+    expect(response.hash, hash);
+  });
 }

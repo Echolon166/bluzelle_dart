@@ -1,6 +1,12 @@
+// Dart imports:
+import 'dart:typed_data';
+
 // Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+// Project imports:
+import 'package:bluzelle_dart/src/utils/export.dart';
 
 part 'responses.g.dart';
 
@@ -25,6 +31,13 @@ class StatusResponse extends Equatable {
   List<Object> get props {
     return [nodeInfo];
   }
+
+  @override
+  String toString() {
+    return '{ '
+        'nodeInfo: $nodeInfo '
+        '}';
+  }
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -45,5 +58,41 @@ class NodeInfo extends Equatable {
   @override
   List<Object> get props {
     return [network];
+  }
+
+  @override
+  String toString() {
+    return 'NodeInfo {'
+        'network: $network '
+        '}';
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BroadcastTxSyncResponse extends Equatable {
+  @JsonKey(name: 'hash')
+  @StringToUint8ListConverter()
+  final Uint8List hash;
+
+  BroadcastTxSyncResponse({required this.hash});
+
+  factory BroadcastTxSyncResponse.fromJson(Map<String, dynamic> json) {
+    return _$BroadcastTxSyncResponseFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$BroadcastTxSyncResponseToJson(this);
+  }
+
+  @override
+  List<Object> get props {
+    return [hash];
+  }
+
+  @override
+  String toString() {
+    return '{ '
+        'hash: $hash '
+        '}';
   }
 }

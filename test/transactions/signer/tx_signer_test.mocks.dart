@@ -30,7 +30,16 @@ class _FakeResponseInfo extends _i1.Fake implements _i2.ResponseInfo {}
 
 class _FakeResponseQuery extends _i1.Fake implements _i2.ResponseQuery {}
 
-class _FakeStatusResponse extends _i1.Fake implements _i3.StatusResponse {}
+class _FakeStatusResponse extends _i1.Fake implements _i3.StatusResponse {
+  @override
+  String toString() => super.toString();
+}
+
+class _FakeBroadcastTxSyncResponse extends _i1.Fake
+    implements _i3.BroadcastTxSyncResponse {
+  @override
+  String toString() => super.toString();
+}
 
 class _FakeTendermintRpcInfo extends _i1.Fake implements _i4.TendermintRpcInfo {
   @override
@@ -85,6 +94,12 @@ class MockTendermint34Client extends _i1.Mock
           Invocation.method(#status, []),
           returnValue: Future<_i3.StatusResponse>.value(_FakeStatusResponse()))
       as _i6.Future<_i3.StatusResponse>);
+  @override
+  _i6.Future<_i3.BroadcastTxSyncResponse> broadcastTxSync(_i8.Uint8List? tx) =>
+      (super.noSuchMethod(Invocation.method(#broadcastTxSync, [tx]),
+              returnValue: Future<_i3.BroadcastTxSyncResponse>.value(
+                  _FakeBroadcastTxSyncResponse()))
+          as _i6.Future<_i3.BroadcastTxSyncResponse>);
 }
 
 /// A class which mocks [NetworkInfo].

@@ -26,3 +26,16 @@ NodeInfo _$NodeInfoFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$NodeInfoToJson(NodeInfo instance) => <String, dynamic>{
       'network': instance.network,
     };
+
+BroadcastTxSyncResponse _$BroadcastTxSyncResponseFromJson(
+    Map<String, dynamic> json) {
+  return BroadcastTxSyncResponse(
+    hash: const StringToUint8ListConverter().fromJson(json['hash'] as String),
+  );
+}
+
+Map<String, dynamic> _$BroadcastTxSyncResponseToJson(
+        BroadcastTxSyncResponse instance) =>
+    <String, dynamic>{
+      'hash': const StringToUint8ListConverter().toJson(instance.hash),
+    };

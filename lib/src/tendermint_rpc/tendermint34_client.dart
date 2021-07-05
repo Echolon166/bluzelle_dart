@@ -109,4 +109,13 @@ class Tendermint34Client extends pb.RpcClient {
 
     return StatusResponse.fromJson(result);
   }
+
+  Future<BroadcastTxSyncResponse> broadcastTxSync(Uint8List tx) async {
+    final request = RequestMethod.broadcastTxSync.rawValue;
+    final payload = {'tx': base64.encode(tx)};
+
+    final result = await _client.sendRequest(request, payload);
+
+    return BroadcastTxSyncResponse.fromJson(result);
+  }
 }

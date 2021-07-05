@@ -13,6 +13,8 @@ import 'package:bluzelle_dart/src/wallet/export.dart';
 /// Allows to create and sign a [Tx] object so that it can later
 ///   be sent to the chain.
 class TxSigner {
+  const TxSigner();
+
   /// Creates a new [Tx] object containing the given [msgs] and signs it using
   ///   the provided [wallet].
   /// Optional [TxConfig], memo, gas and fees can be supplied as well.

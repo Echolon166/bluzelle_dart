@@ -13,7 +13,7 @@ abstract class Client extends pb.RpcClient {
 }
 
 /// [QueryClient] acts as a bridge between custom [pb.GeneratedMessage] type
-///   requests and [Tendermint34Client.abciQuery].
+///   query requests and [Tendermint34Client.abciQuery].
 /// Request's path will be derived from its info, and an abciQuery will be sent
 ///   using derived path and request's bytes.
 class QueryClient implements Client {
