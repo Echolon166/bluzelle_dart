@@ -16,3 +16,4 @@ linter:
 analyzer:
   exclude:
     - lib/src/codec/**
+    - "**/*.mocks.dart"

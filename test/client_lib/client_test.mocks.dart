@@ -2,22 +2,17 @@
 // in bluzelle_dart/test/client_lib/client_test.dart.
 // Do not manually edit this file.
 
-// Dart imports:
 import 'dart:async' as _i5;
 import 'dart:typed_data' as _i7;
 
-// Package imports:
-import 'package:fixnum/fixnum.dart' as _i8;
-import 'package:mockito/mockito.dart' as _i1;
-import 'package:protobuf/protobuf.dart' as _i6;
-
-// Project imports:
 import 'package:bluzelle_dart/src/codec/tendermint/abci/types.pb.dart' as _i2;
-
 import 'package:bluzelle_dart/src/tendermint_rpc/responses/responses.dart'
     as _i3;
 import 'package:bluzelle_dart/src/tendermint_rpc/tendermint34_client.dart'
     as _i4;
+import 'package:fixnum/fixnum.dart' as _i8;
+import 'package:mockito/mockito.dart' as _i1;
+import 'package:protobuf/protobuf.dart' as _i6;
 
 // ignore_for_file: avoid_redundant_argument_values
 // ignore_for_file: comment_references
