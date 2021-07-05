@@ -6,15 +6,6 @@ import 'package:bluzelle_dart/src/types/export.dart';
 import 'package:bluzelle_dart/src/codec/cosmos/auth/v1beta1/export.dart'
     as auth;
 
-/// Allows to create and sign a [Tx] object so that it can later
-///   be sent to the chain.
-class TxSigner {
-  final Tendermint34Client _tendermint34Client;
-
-  TxSigner({required tendermint34Client})
-      : _tendermint34Client = tendermint34Client;
-}
-
 /// Reads the account data and retrieves the details of the account
 ///   having the given [address] from it.
 /// If no account with the specified [address] is found,
@@ -33,8 +24,6 @@ Future<BaseAccount?> getAccountData({
   }
 
   final account = BaseAccount.fromBuffer(response.account.value);
-
-  // queryClient.close();
 
   return account.address == address ? account : null;
 }

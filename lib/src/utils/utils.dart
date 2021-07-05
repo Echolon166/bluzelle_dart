@@ -1,6 +1,12 @@
 // Dart imports:
 import 'dart:typed_data';
 
+// Package imports:
+import 'package:protobuf/protobuf.dart' as pb;
+
+// Project imports:
+import 'package:bluzelle_dart/src/types/export.dart';
+
 /// Indicates that future is intentionally not await-ed.
 void unawaited(Future<void>? future) {}
 
@@ -12,4 +18,9 @@ void copy(Uint8List source, int start, int end, Uint8List destination) {
     destination[i] = source[index];
     index++;
   }
+}
+
+/// Serializes the given [value] into a [Map].
+Any serialize(pb.GeneratedMessage value) {
+  return Any.pack(value, typeUrlPrefix: '');
 }

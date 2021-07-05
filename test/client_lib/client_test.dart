@@ -11,7 +11,7 @@ import 'package:bluzelle_dart/src/client_lib/client.dart';
 import 'package:bluzelle_dart/src/codec/crud/export.dart' as crud;
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
-import '../tendermint_rpc/tendermint34_client_test.mocks.dart';
+import 'client_test.mocks.dart';
 
 @GenerateMocks([Tendermint34Client])
 void main() {
