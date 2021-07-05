@@ -26,10 +26,9 @@ void main() {
     networkInfo = MockNetworkInfo();
   });
 
-  final mnemonic =
-      'purpose month upgrade carpet cactus pink private target afford denial luxury club rocket spice test lesson wave skirt identify impose dilemma maximum slogan radar';
-	final accountData = [10, 47, 98, 108, 117, 122, 101, 108, 108, 101, 49, 121, 118, 52, 110, 108, 110, 107, 116, 119, 100, 120, 108, 106, 108, 109, 115, 110, 112, 102, 106, 100, 116, 51, 99, 48, 50, 118, 110, 108, 120, 113, 97, 53, 54, 56, 112, 108, 103];
-	final accountResponseData = [10, 159, 1, 10, 32, 47, 99, 111, 115, 109, 111, 115, 46, 97, 117, 116, 104, 46, 118, 49, 98, 101, 116, 97, 49, 46, 66, 97, 115, 101, 65, 99, 99, 111, 117, 110, 116, 18, 123, 10, 47, 98, 108, 117, 122, 101, 108, 108, 101, 49, 121, 118, 52, 110, 108, 110, 107, 116, 119, 100, 120, 108, 106, 108, 109, 115, 110, 112, 102, 106, 100, 116, 51, 99, 48, 50, 118, 110, 108, 120, 113, 97, 53, 54, 56, 112, 108, 103, 18, 70, 10, 31, 47, 99, 111, 115, 109, 111, 115, 46, 99, 114, 121, 112, 116, 111, 46, 115, 101, 99, 112, 50, 53, 54, 107, 49, 46, 80, 117, 98, 75, 101, 121, 18, 35, 10, 33, 2, 244, 230, 94, 145, 138, 184, 194, 149, 221, 159, 113, 233, 240, 204, 115, 65, 184, 110, 248, 95, 213, 191, 21, 235, 232, 220, 89, 236, 27, 94, 244, 177, 32, 27];
+  final mnemonic = 'purpose month upgrade carpet cactus pink private target afford denial luxury club rocket spice test lesson wave skirt identify impose dilemma maximum slogan radar';
+  final accountData = [10, 47, 98, 108, 117, 122, 101, 108, 108, 101, 49, 121, 118, 52, 110, 108, 110, 107, 116, 119, 100, 120, 108, 106, 108, 109, 115, 110, 112, 102, 106, 100, 116, 51, 99, 48, 50, 118, 110, 108, 120, 113, 97, 53, 54, 56, 112, 108, 103];
+  final accountResponseData = [10, 159, 1, 10, 32, 47, 99, 111, 115, 109, 111, 115, 46, 97, 117, 116, 104, 46, 118, 49, 98, 101, 116, 97, 49, 46, 66, 97, 115, 101, 65, 99, 99, 111, 117, 110, 116, 18, 123, 10, 47, 98, 108, 117, 122, 101, 108, 108, 101, 49, 121, 118, 52, 110, 108, 110, 107, 116, 119, 100, 120, 108, 106, 108, 109, 115, 110, 112, 102, 106, 100, 116, 51, 99, 48, 50, 118, 110, 108, 120, 113, 97, 53, 54, 56, 112, 108, 103, 18, 70, 10, 31, 47, 99, 111, 115, 109, 111, 115, 46, 99, 114, 121, 112, 116, 111, 46, 115, 101, 99, 112, 50, 53, 54, 107, 49, 46, 80, 117, 98, 75, 101, 121, 18, 35, 10, 33, 2, 244, 230, 94, 145, 138, 184, 194, 149, 221, 159, 113, 233, 240, 204, 115, 65, 184, 110, 248, 95, 213, 191, 21, 235, 232, 220, 89, 236, 27, 94, 244, 177, 32, 27];
 
   test('Tx with fees is created and signed correctly', () async {
     when(networkInfo.tendermint34Client).thenAnswer((_) => tendermint34Client);
@@ -64,6 +63,7 @@ void main() {
     );
     expect(wallet.networkInfo, networkInfo);
 
+    // Create the message.
     final message = crud.MsgCreate(
       creator: wallet.bech32Address,
       uuid: 'test',
@@ -72,13 +72,13 @@ void main() {
       lease: crud.Lease(hours: 1),
     );
 
+    // Set the fee.
     final fee = Fee();
     fee.gasLimit = 100000000.toInt64();
     fee.amount.add(Coin(denom: 'ubnt', amount: '200000'));
 
-    final signer = TxSigner();
-
-    final signedTx = await signer.createAndSign(
+    // Sign the transaction.
+    final signedTx = await TxSigner().createAndSign(
       wallet: wallet,
       msgs: [message],
       fee: fee,

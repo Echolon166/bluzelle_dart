@@ -5,25 +5,18 @@ import 'package:protobuf/protobuf.dart' as pb;
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/wallet/export.dart';
 
-abstract class Client extends pb.RpcClient {
-  // ignore: unused_field
-  abstract final Tendermint34Client _tendermint34Client;
-
-  void close();
-}
-
 /// [QueryClient] acts as a bridge between custom [pb.GeneratedMessage] type
 ///   query requests and [Tendermint34Client.abciQuery].
 /// Request's path will be derived from its info, and an abciQuery will be sent
 ///   using derived path and request's bytes.
-class QueryClient implements Client {
-  @override
+class QueryClient extends pb.RpcClient {
   final Tendermint34Client _tendermint34Client;
 
-  QueryClient(Tendermint34Client tendermint34Client)
+  QueryClient({required Tendermint34Client tendermint34Client})
       : _tendermint34Client = tendermint34Client;
 
-  /// Creates a [QueryClient] instance along with a [Tendermint34Client] instance.
+  /// Creates a [QueryClient] instance along with a [Tendermint34Client]
+  ///   instance.
   factory QueryClient.connect({
     required String host,
     required int port,
@@ -33,15 +26,14 @@ class QueryClient implements Client {
       port: port,
     );
 
-    return QueryClient(newTendermint34Client);
+    return QueryClient(tendermint34Client: newTendermint34Client);
   }
 
-  /// Creates a [QueryClient] instance from given [NetworkInfo] instance.
-  factory QueryClient.fromNetworkInfo(NetworkInfo info) {
-    return QueryClient(info.tendermint34Client);
+  /// Creates a [QueryClient] instance from given [networkInfo].
+  factory QueryClient.fromNetworkInfo(NetworkInfo networkInfo) {
+    return QueryClient(tendermint34Client: networkInfo.tendermint34Client);
   }
 
-  @override
   void close() {
     _tendermint34Client.close();
   }
@@ -71,7 +63,7 @@ class QueryClient implements Client {
   }
 }
 
-/// Derive required path using [request]'s info.
+/// Derive required path using [serviceName], [methodName] and [request]'s info.
 String derivePath({
   required String serviceName,
   required String methodName,
