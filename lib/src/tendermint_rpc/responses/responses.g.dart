@@ -76,6 +76,9 @@ TxResult _$TxResultFromJson(Map<String, dynamic> json) {
     code: json['code'] as int,
     log: json['log'] as String?,
     codeSpace: json['codespace'] as String?,
+    events: (json['events'] as List<dynamic>)
+        .map((e) => Event.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -83,4 +86,15 @@ Map<String, dynamic> _$TxResultToJson(TxResult instance) => <String, dynamic>{
       'code': instance.code,
       'log': instance.log,
       'codespace': instance.codeSpace,
+      'events': instance.events.map((e) => e.toJson()).toList(),
+    };
+
+Event _$EventFromJson(Map<String, dynamic> json) {
+  return Event(
+    type: json['type'] as String,
+  );
+}
+
+Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
+      'type': instance.type,
     };

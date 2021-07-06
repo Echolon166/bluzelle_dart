@@ -210,16 +210,18 @@ class TxResult extends Equatable {
   @JsonKey(name: 'codespace')
   final String? codeSpace;
 
+  @JsonKey(name: 'events')
+  final List<Event> events;
+
   // Missing: gas_wanted
   //          gas_used
-  //          events
-  //          codespace
   //          data
 
   TxResult({
     required this.code,
     this.log,
     this.codeSpace,
+    required this.events,
   });
 
   factory TxResult.fromJson(Map<String, dynamic> json) {
@@ -236,6 +238,7 @@ class TxResult extends Equatable {
       code,
       log,
       codeSpace,
+      events,
     ];
   }
 
@@ -244,7 +247,38 @@ class TxResult extends Equatable {
     return 'TxResult {'
         'code: $code, '
         'log: $log, '
-        'codeSpace: $codeSpace '
+        'codeSpace: $codeSpace, '
+        'events: $events '
+        '}';
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class Event extends Equatable {
+  @JsonKey(name: 'type')
+  final String type;
+
+  // Missing: attributes
+
+  Event({required this.type});
+
+  factory Event.fromJson(Map<String, dynamic> json) {
+    return _$EventFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$EventToJson(this);
+  }
+
+  @override
+  List<Object> get props {
+    return [type];
+  }
+
+  @override
+  String toString() {
+    return 'Event {'
+        'type: $type '
         '}';
   }
 }

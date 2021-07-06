@@ -14,7 +14,8 @@ export 'package:bluzelle_dart/src/codec/crud/export.dart'
         QueryServiceBase$json,
         queryServiceDescriptor,
         QueryServiceBase$messageJson;
-export 'package:bluzelle_dart/src/codec/google/protobuf/export.dart';
+export 'package:bluzelle_dart/src/codec/google/protobuf/export.dart'
+    hide Duration;
 export 'package:bluzelle_dart/src/codec/tendermint/abci/export.dart';
 
 export 'cosmos_signature.dart';

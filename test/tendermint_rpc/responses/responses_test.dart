@@ -38,7 +38,7 @@ void main() {
   });
 
   test('TxSearchResponse toJson and fromJson works properly.', () {
-    final txResult = TxResult(code: 5, log: 'test');
+    final txResult = TxResult(code: 5, log: 'test', events: []);
     final txResponse = TxResponse(
       hash: Uint8List.fromList([1, 2, 3]),
       txResult: txResult,
@@ -56,7 +56,7 @@ void main() {
   });
 
   test('TxResponse toJson and fromJson works properly.', () {
-    final txResult = TxResult(code: 5, log: 'test');
+    final txResult = TxResult(code: 5, log: 'test', events: []);
     final txResponse = TxResponse(
       hash: Uint8List.fromList([1, 2, 3]),
       txResult: txResult,
@@ -70,11 +70,20 @@ void main() {
   });
 
   test('TxResult toJson and fromJson works properly.', () {
-    final txResult = TxResult(code: 5, log: 'test');
+    final txResult = TxResult(code: 5, log: 'test', events: []);
 
     final json = txResult.toJson();
     final fromJson = TxResult.fromJson(json);
 
     expect(fromJson, equals(txResult));
+  });
+
+  test('Event toJson and fromJson works properly.', () {
+    final event = Event(type: 'test');
+
+    final json = event.toJson();
+    final fromJson = Event.fromJson(json);
+
+    expect(fromJson, equals(event));
   });
 }
