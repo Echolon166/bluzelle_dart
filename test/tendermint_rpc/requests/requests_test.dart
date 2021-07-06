@@ -17,4 +17,13 @@ void main() {
 
     expect(fromJson, equals(broadcastTxSyncRequest));
   });
+
+  test('TxSearchRequest toJson and fromJson works properly.', () {
+    final txSearchRequest = TxSearchRequest(query: 'test', prove: false);
+
+    final json = txSearchRequest.toJson();
+    final fromJson = TxSearchRequest.fromJson(json);
+
+    expect(fromJson, equals(txSearchRequest));
+  });
 }

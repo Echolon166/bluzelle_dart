@@ -36,6 +36,11 @@ class _FakeBroadcastTxSyncResponse extends _i1.Fake
   String toString() => super.toString();
 }
 
+class _FakeTxSearchResponse extends _i1.Fake implements _i3.TxSearchResponse {
+  @override
+  String toString() => super.toString();
+}
+
 class _FakeTendermintRpcInfo extends _i1.Fake implements _i4.TendermintRpcInfo {
   @override
   String toString() => super.toString();
@@ -96,6 +101,19 @@ class MockTendermint34Client extends _i1.Mock
               returnValue: Future<_i3.BroadcastTxSyncResponse>.value(
                   _FakeBroadcastTxSyncResponse()))
           as _i6.Future<_i3.BroadcastTxSyncResponse>);
+  @override
+  _i6.Future<_i3.TxSearchResponse> txSearch(
+          {String? query, bool? prove, _i9.Int64? page, _i9.Int64? perPage}) =>
+      (super.noSuchMethod(
+              Invocation.method(#txSearch, [], {
+                #query: query,
+                #prove: prove,
+                #page: page,
+                #perPage: perPage
+              }),
+              returnValue:
+                  Future<_i3.TxSearchResponse>.value(_FakeTxSearchResponse()))
+          as _i6.Future<_i3.TxSearchResponse>);
 }
 
 /// A class which mocks [NetworkInfo].

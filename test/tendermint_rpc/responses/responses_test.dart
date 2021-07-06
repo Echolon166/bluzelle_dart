@@ -36,4 +36,45 @@ void main() {
 
     expect(fromJson, equals(broadcastTxSyncResponse));
   });
+
+  test('TxSearchResponse toJson and fromJson works properly.', () {
+    final txResult = TxResult(code: 5, log: 'test');
+    final txResponse = TxResponse(
+      hash: Uint8List.fromList([1, 2, 3]),
+      txResult: txResult,
+      tx: Uint8List.fromList([4, 5, 6]),
+    );
+    final txSearchResponse = TxSearchResponse(
+      txs: [txResponse],
+      totalCount: 1,
+    );
+
+    final json = txSearchResponse.toJson();
+    final fromJson = TxSearchResponse.fromJson(json);
+
+    expect(fromJson, equals(txSearchResponse));
+  });
+
+  test('TxResponse toJson and fromJson works properly.', () {
+    final txResult = TxResult(code: 5, log: 'test');
+    final txResponse = TxResponse(
+      hash: Uint8List.fromList([1, 2, 3]),
+      txResult: txResult,
+      tx: Uint8List.fromList([4, 5, 6]),
+    );
+
+    final json = txResponse.toJson();
+    final fromJson = TxResponse.fromJson(json);
+
+    expect(fromJson, equals(txResponse));
+  });
+
+  test('TxResult toJson and fromJson works properly.', () {
+    final txResult = TxResult(code: 5, log: 'test');
+
+    final json = txResult.toJson();
+    final fromJson = TxResult.fromJson(json);
+
+    expect(fromJson, equals(txResult));
+  });
 }

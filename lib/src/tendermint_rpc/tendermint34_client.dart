@@ -49,6 +49,15 @@ class Tendermint34Client extends pb.RpcClient {
     return Tendermint34Client(client);
   }
 
+  void _resultValidator({
+    required String request,
+    required dynamic response,
+  }) {
+    if (response["code"] != null && response["code"] != 0) {
+      throw ('$request call failed with code ${response["code"]} (codespace: ${response["codeSpace"]}, log: ${response["log"]}.');
+    }
+  }
+
   /// Closes the rpc connection of the [Tendermint34Client].
   void close() {
     _client.close();
@@ -74,9 +83,12 @@ class Tendermint34Client extends pb.RpcClient {
       payload["data"] = hex.encode(decodedData);
     }
 
-    await _client.sendRequest(methodName, payload).then(
-          (result) => emptyResponse.mergeFromProto3Json(result["response"]),
-        );
+    final result = await _client.sendRequest(methodName, payload);
+    final response = result["response"];
+
+    _resultValidator(request: methodName, response: response);
+
+    emptyResponse.mergeFromProto3Json(response);
 
     return emptyResponse;
   }
@@ -113,9 +125,11 @@ class Tendermint34Client extends pb.RpcClient {
   /// https://docs.tendermint.com/master/rpc/#/Info/status
   Future<StatusResponse> status() async {
     final request = RequestMethod.status.rawValue;
-    final result = await _client.sendRequest(request);
+    final response = await _client.sendRequest(request);
 
-    return StatusResponse.fromJson(result);
+    _resultValidator(request: request, response: response);
+
+    return StatusResponse.fromJson(response);
   }
 
   /// https://docs.tendermint.com/master/rpc/#/Tx/broadcast_tx_sync
@@ -125,8 +139,32 @@ class Tendermint34Client extends pb.RpcClient {
     final request = RequestMethod.broadcastTxSync.rawValue;
     final payload = BroadcastTxSyncRequest(tx: tx);
 
-    final result = await _client.sendRequest(request, payload.toJson());
+    final response = await _client.sendRequest(request, payload.toJson());
 
-    return BroadcastTxSyncResponse.fromJson(result);
+    _resultValidator(request: request, response: response);
+
+    return BroadcastTxSyncResponse.fromJson(response);
+  }
+
+  /// https://docs.tendermint.com/master/rpc/#/Info/tx_search
+  Future<TxSearchResponse> txSearch({
+    required String query,
+    bool? prove,
+    fixnum.Int64? page,
+    fixnum.Int64? perPage,
+  }) async {
+    final request = RequestMethod.txSearch.rawValue;
+    final payload = TxSearchRequest(
+      query: query,
+      prove: prove,
+      page: page,
+      perPage: perPage,
+    );
+
+    final response = await _client.sendRequest(request, payload.toJson());
+
+    _resultValidator(request: request, response: response);
+
+    return TxSearchResponse.fromJson(response);
   }
 }

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 // Package imports:
 import 'package:equatable/equatable.dart';
+import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
@@ -12,7 +13,7 @@ part 'requests.g.dart';
 
 /// RPC methods as documented in https://docs.tendermint.com/master/rpc/
 ///
-/// Enum raw value must match the spelling in the "shell" example call (snake_case)
+/// Enum raw value must match the spelling in the "shell" example call (snake_case).
 
 enum RequestMethod {
   abciInfo,
@@ -80,6 +81,8 @@ extension RequestMethodExtension on RequestMethod {
   }
 }
 
+/// Custom Request classes to be used by Tendermint34Client.
+
 @JsonSerializable(explicitToJson: true)
 class BroadcastTxSyncRequest extends Equatable {
   @JsonKey(name: 'tx')
@@ -105,6 +108,58 @@ class BroadcastTxSyncRequest extends Equatable {
   String toString() {
     return '{ '
         'tx: $tx '
+        '}';
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class TxSearchRequest extends Equatable {
+  @JsonKey(name: 'query')
+  final String query;
+
+  @JsonKey(name: 'prove')
+  final bool? prove;
+
+  @JsonKey(name: 'page')
+  @NullableInt64ToIntConverter()
+  final fixnum.Int64? page;
+
+  @JsonKey(name: 'per_page')
+  @NullableInt64ToIntConverter()
+  final fixnum.Int64? perPage;
+
+  TxSearchRequest({
+    required this.query,
+    this.prove,
+    this.page,
+    this.perPage,
+  });
+
+  factory TxSearchRequest.fromJson(Map<String, dynamic> json) {
+    return _$TxSearchRequestFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$TxSearchRequestToJson(this);
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      query,
+      prove,
+      page,
+      perPage,
+    ];
+  }
+
+  @override
+  String toString() {
+    return '{ '
+        'query: $query, '
+        'prove: $prove, '
+        'page: $page, '
+        'perPage: $perPage '
         '}';
   }
 }

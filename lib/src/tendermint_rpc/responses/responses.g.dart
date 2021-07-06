@@ -39,3 +39,48 @@ Map<String, dynamic> _$BroadcastTxSyncResponseToJson(
     <String, dynamic>{
       'hash': const StringToUint8ListConverter().toJson(instance.hash),
     };
+
+TxSearchResponse _$TxSearchResponseFromJson(Map<String, dynamic> json) {
+  return TxSearchResponse(
+    txs: (json['txs'] as List<dynamic>)
+        .map((e) => TxResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    totalCount:
+        const StringToIntConverter().fromJson(json['total_count'] as String),
+  );
+}
+
+Map<String, dynamic> _$TxSearchResponseToJson(TxSearchResponse instance) =>
+    <String, dynamic>{
+      'txs': instance.txs.map((e) => e.toJson()).toList(),
+      'total_count': const StringToIntConverter().toJson(instance.totalCount),
+    };
+
+TxResponse _$TxResponseFromJson(Map<String, dynamic> json) {
+  return TxResponse(
+    hash: const StringToUint8ListConverter().fromJson(json['hash'] as String),
+    txResult: TxResult.fromJson(json['tx_result'] as Map<String, dynamic>),
+    tx: const StringToUint8ListConverter().fromJson(json['tx'] as String),
+  );
+}
+
+Map<String, dynamic> _$TxResponseToJson(TxResponse instance) =>
+    <String, dynamic>{
+      'hash': const StringToUint8ListConverter().toJson(instance.hash),
+      'tx_result': instance.txResult.toJson(),
+      'tx': const StringToUint8ListConverter().toJson(instance.tx),
+    };
+
+TxResult _$TxResultFromJson(Map<String, dynamic> json) {
+  return TxResult(
+    code: json['code'] as int,
+    log: json['log'] as String?,
+    codeSpace: json['codespace'] as String?,
+  );
+}
+
+Map<String, dynamic> _$TxResultToJson(TxResult instance) => <String, dynamic>{
+      'code': instance.code,
+      'log': instance.log,
+      'codespace': instance.codeSpace,
+    };
