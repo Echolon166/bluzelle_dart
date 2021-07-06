@@ -14,6 +14,11 @@ import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
 import 'package:bluzelle_dart/src/utils/export.dart';
 
+/// [Tendermint34Client] is to interact with Tendermint RPC via defined requests.
+/// If the request is a [pb.GeneratedMessage] type request, it will be send to
+///   RPC via [invoke] method which is overriden from [pb.RpcClient].
+/// If not, the required payload will be built inside their relative functions,
+///   and will be sent directly to [_client.sendRequest].
 class Tendermint34Client extends pb.RpcClient {
   final rpc.Client _client;
 
@@ -49,7 +54,8 @@ class Tendermint34Client extends pb.RpcClient {
     _client.close();
   }
 
-  /// Sends a request to a server and returns the reply.
+  /// Sends [pb.GeneratedMessage] type [request] to a server and returns
+  ///   the reply.
   /// Serializes the request as Json. Merges the reply into [emptyResponse]
   ///   and returns it.
   @override
@@ -113,11 +119,13 @@ class Tendermint34Client extends pb.RpcClient {
   }
 
   /// https://docs.tendermint.com/master/rpc/#/Tx/broadcast_tx_sync
-  Future<BroadcastTxSyncResponse> broadcastTxSync(Uint8List tx) async {
+  Future<BroadcastTxSyncResponse> broadcastTxSync({
+    required Uint8List tx,
+  }) async {
     final request = RequestMethod.broadcastTxSync.rawValue;
-    final payload = {'tx': base64.encode(tx)};
+    final payload = BroadcastTxSyncRequest(tx: tx);
 
-    final result = await _client.sendRequest(request, payload);
+    final result = await _client.sendRequest(request, payload.toJson());
 
     return BroadcastTxSyncResponse.fromJson(result);
   }

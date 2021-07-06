@@ -60,7 +60,7 @@ class TransactionClient extends pb.RpcClient {
 
     // Broadcast the signed transaction.
     await _wallet.networkInfo.tendermint34Client
-        .broadcastTxSync(signedTx.writeToBuffer());
+        .broadcastTxSync(tx: signedTx.writeToBuffer());
 
     return emptyResponse;
   }

@@ -81,8 +81,9 @@ class MockTendermint34Client extends _i1.Mock
           returnValue: Future<_i3.StatusResponse>.value(_FakeStatusResponse()))
       as _i5.Future<_i3.StatusResponse>);
   @override
-  _i5.Future<_i3.BroadcastTxSyncResponse> broadcastTxSync(_i7.Uint8List? tx) =>
-      (super.noSuchMethod(Invocation.method(#broadcastTxSync, [tx]),
+  _i5.Future<_i3.BroadcastTxSyncResponse> broadcastTxSync(
+          {_i7.Uint8List? tx}) =>
+      (super.noSuchMethod(Invocation.method(#broadcastTxSync, [], {#tx: tx}),
               returnValue: Future<_i3.BroadcastTxSyncResponse>.value(
                   _FakeBroadcastTxSyncResponse()))
           as _i5.Future<_i3.BroadcastTxSyncResponse>);

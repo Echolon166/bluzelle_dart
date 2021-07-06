@@ -1,3 +1,15 @@
+// Dart imports:
+import 'dart:typed_data';
+
+// Package imports:
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+// Project imports:
+import 'package:bluzelle_dart/src/utils/export.dart';
+
+part 'requests.g.dart';
+
 /// RPC methods as documented in https://docs.tendermint.com/master/rpc/
 ///
 /// Enum raw value must match the spelling in the "shell" example call (snake_case)
@@ -65,5 +77,34 @@ extension RequestMethodExtension on RequestMethod {
       default:
         return '';
     }
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BroadcastTxSyncRequest extends Equatable {
+  @JsonKey(name: 'tx')
+  @Base64StringToUint8ListConverter()
+  final Uint8List tx;
+
+  BroadcastTxSyncRequest({required this.tx});
+
+  factory BroadcastTxSyncRequest.fromJson(Map<String, dynamic> json) {
+    return _$BroadcastTxSyncRequestFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$BroadcastTxSyncRequestToJson(this);
+  }
+
+  @override
+  List<Object> get props {
+    return [tx];
+  }
+
+  @override
+  String toString() {
+    return '{ '
+        'tx: $tx '
+        '}';
   }
 }
