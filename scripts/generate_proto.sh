@@ -23,7 +23,7 @@ done
 find "$OUT" -name "*.pbserver.dart" -type f -delete
 
 # Delete no longer required Protobuf folders
-rm -rf "$PROTO"
+# rm -rf "$PROTO"
 
 # Generate exports
 sh ./scripts/generate_exports.sh "$OUT"
