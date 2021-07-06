@@ -7,8 +7,6 @@ import 'package:bluzelle_dart/src/wallet/export.dart';
 
 /// [QueryClient] acts as a bridge between custom [pb.GeneratedMessage] type
 ///   query requests and [Tendermint34Client.abciQuery].
-/// Request's path will be derived from its info, and an abciQuery will be sent
-///   using derived path and request's bytes.
 class QueryClient extends pb.RpcClient {
   final Tendermint34Client _tendermint34Client;
 
@@ -38,6 +36,8 @@ class QueryClient extends pb.RpcClient {
     _tendermint34Client.close();
   }
 
+  /// [request]'s path will be derived from its info, and an abciQuery will be
+  ///   sent using derived path and [request]'s value.
   @override
   Future<T> invoke<T extends pb.GeneratedMessage>(
     pb.ClientContext? ctx,

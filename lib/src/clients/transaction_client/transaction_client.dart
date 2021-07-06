@@ -40,6 +40,9 @@ class TransactionClient extends pb.RpcClient {
     _wallet.networkInfo.tendermint34Client.close();
   }
 
+  /// A new transaction will be builded and signed from the given [request].
+  /// Signed transaction will be broadcasted via
+  ///   [Tendermint34Client.broadcastTxSync()].
   @override
   Future<T> invoke<T extends pb.GeneratedMessage>(
     pb.ClientContext? ctx,
@@ -48,14 +51,14 @@ class TransactionClient extends pb.RpcClient {
     pb.GeneratedMessage request,
     T emptyResponse,
   ) async {
-    // Sign the transaction.
+    // Build and sign the transaction.
     final signedTx = await TxSigner().createAndSign(
       wallet: _wallet,
       msgs: [request],
       fee: fee,
     );
 
-    // Broadcast the transaction.
+    // Broadcast the signed transaction.
     await _wallet.networkInfo.tendermint34Client
         .broadcastTxSync(signedTx.writeToBuffer());
 
