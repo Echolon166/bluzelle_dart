@@ -28,11 +28,10 @@ class Tendermint34Client extends pb.RpcClient {
     required String host,
     required int port,
   }) {
-    var url = '$host:${port.toString()}';
+    var url = '$host:${port.toString()}/websocket';
 
     if (url.startsWith('http://') || url.startsWith('https://')) {
       url = url.replaceFirst(RegExp(r'http'), 'ws');
-      url += '/websocket';
     }
 
     final socket = ws.WebSocketChannel.connect(Uri.parse(url));
@@ -76,6 +75,7 @@ class Tendermint34Client extends pb.RpcClient {
     return emptyResponse;
   }
 
+  /// https://docs.tendermint.com/master/rpc/#/ABCI/abci_info
   Future<ResponseInfo> abciInfo() async => await invoke(
         null,
         'ABCIApplication',
@@ -84,6 +84,7 @@ class Tendermint34Client extends pb.RpcClient {
         ResponseInfo(),
       );
 
+  /// https://docs.tendermint.com/master/rpc/#/ABCI/abci_query
   Future<ResponseQuery> abciQuery({
     required String path,
     required Uint8List data,
@@ -103,6 +104,7 @@ class Tendermint34Client extends pb.RpcClient {
         ResponseQuery(),
       );
 
+  /// https://docs.tendermint.com/master/rpc/#/Info/status
   Future<StatusResponse> status() async {
     final request = RequestMethod.status.rawValue;
     final result = await _client.sendRequest(request);
@@ -110,6 +112,7 @@ class Tendermint34Client extends pb.RpcClient {
     return StatusResponse.fromJson(result);
   }
 
+  /// https://docs.tendermint.com/master/rpc/#/Tx/broadcast_tx_sync
   Future<BroadcastTxSyncResponse> broadcastTxSync(Uint8List tx) async {
     final request = RequestMethod.broadcastTxSync.rawValue;
     final payload = {'tx': base64.encode(tx)};

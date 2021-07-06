@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:typed_data';
+
 // Package imports:
 import 'package:test/test.dart';
 
@@ -15,12 +18,22 @@ void main() {
     expect(fromJson, equals(statusResponse));
   });
 
-  test('NodeInfo toJson and fromJson works properly', () {
+  test('NodeInfo toJson and fromJson works properly.', () {
     final nodeInfo = NodeInfo(network: 'test');
 
     final json = nodeInfo.toJson();
     final fromJson = NodeInfo.fromJson(json);
 
     expect(fromJson, equals(nodeInfo));
+  });
+
+  test('BroadcastTxSyncResponse toJson and fromJson works properly.', () {
+    final broadcastTxSyncResponse =
+        BroadcastTxSyncResponse(hash: Uint8List.fromList([1, 2, 3]));
+
+    final json = broadcastTxSyncResponse.toJson();
+    final fromJson = BroadcastTxSyncResponse.fromJson(json);
+
+    expect(fromJson, equals(broadcastTxSyncResponse));
   });
 }
