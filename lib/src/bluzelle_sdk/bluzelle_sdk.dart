@@ -4,15 +4,22 @@ import 'package:protobuf/protobuf.dart' as pb;
 // Project imports:
 import 'package:bluzelle_dart/src/bluzelle_sdk/export.dart';
 import 'package:bluzelle_dart/src/codec/crud/export.dart' as crud;
+import 'package:bluzelle_dart/src/codec/cosmos/bank/v1beta1/export.dart'
+    as bank;
 import 'package:bluzelle_dart/src/types/export.dart';
 import 'package:bluzelle_dart/src/wallet/export.dart';
 
+typedef BankSdk = Sdk<bank.QueryApi, bank.MsgApi>;
 typedef DatabaseSdk = Sdk<crud.QueryApi, crud.MsgApi>;
 
 class BluzelleSdk {
   DatabaseSdk db;
+  BankSdk bank;
 
-  BluzelleSdk({required this.db});
+  BluzelleSdk({
+    required this.db,
+    required this.bank,
+  });
 }
 
 BluzelleSdk bluzelle({
@@ -43,15 +50,27 @@ BluzelleSdk bluzelle({
     ),
   );
 
-  final DatabaseSdk db = sdk<crud.QueryApi, crud.MsgApi>(
+  final DatabaseSdk databaseSdk = sdk<crud.QueryApi, crud.MsgApi>(
     wallet: wallet,
     fee: fee,
     qApi: newCrudQueryApi,
     mApi: newCrudMsgApi,
   );
 
-  return BluzelleSdk(db: db);
+  final BankSdk bankSdk = sdk<bank.QueryApi, bank.MsgApi>(
+    wallet: wallet,
+    fee: fee,
+    qApi: newBankQueryApi,
+    mApi: newBankMsgApi,
+  );
+
+  return BluzelleSdk(
+    db: databaseSdk,
+    bank: bankSdk,
+  );
 }
 
 crud.QueryApi newCrudQueryApi(pb.RpcClient rpc) => crud.QueryApi(rpc);
 crud.MsgApi newCrudMsgApi(pb.RpcClient rpc) => crud.MsgApi(rpc);
+bank.QueryApi newBankQueryApi(pb.RpcClient rpc) => bank.QueryApi(rpc);
+bank.MsgApi newBankMsgApi(pb.RpcClient rpc) => bank.MsgApi(rpc);

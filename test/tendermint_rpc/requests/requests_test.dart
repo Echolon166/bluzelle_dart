@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 
 // Project imports:
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
+import 'package:bluzelle_dart/src/types/export.dart';
 
 void main() {
   test('BroadcastTxSyncRequest toJson and fromJson works properly.', () {
@@ -19,7 +20,11 @@ void main() {
   });
 
   test('TxSearchRequest toJson and fromJson works properly.', () {
-    final txSearchRequest = TxSearchRequest(query: 'test', prove: false);
+    final txSearchRequest = TxSearchRequest(
+      query: 'test',
+      prove: false,
+      page: 10.toInt64(),
+    );
 
     final json = txSearchRequest.toJson();
     final fromJson = TxSearchRequest.fromJson(json);

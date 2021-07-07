@@ -13,6 +13,7 @@ TENDERMINT_LINK=https://raw.githubusercontent.com/tendermint/tendermint/master/p
 PROTO_BLUZELLE_CRUD=$1/crud
 PROTO_COSMOSPROTO=$1/cosmos_proto
 PROTO_COSMOS_AUTH_V1BETA1=$1/cosmos/auth/v1beta1
+PROTO_COSMOS_BANK_V1BETA1=$1/cosmos/bank/v1beta1
 PROTO_COSMOS_BASE_QUERY_V1BETA1=$1/cosmos/base/query/v1beta1
 PROTO_COSMOS_BASE_V1BETA1=$1/cosmos/base/v1beta1
 PROTO_COSMOS_CRYPTO_MULTISIG_V1BETA1=$1/cosmos/crypto/multisig/v1beta1
@@ -34,6 +35,7 @@ mkdir -p "$1"
 mkdir -p "$PROTO_BLUZELLE_CRUD"
 mkdir -p "$PROTO_COSMOSPROTO"
 mkdir -p "$PROTO_COSMOS_AUTH_V1BETA1"
+mkdir -p "$PROTO_COSMOS_BANK_V1BETA1"
 mkdir -p "$PROTO_COSMOS_BASE_QUERY_V1BETA1"
 mkdir -p "$PROTO_COSMOS_BASE_V1BETA1"
 mkdir -p "$PROTO_COSMOS_CRYPTO_MULTISIG_V1BETA1"
@@ -70,6 +72,9 @@ curl "$TENDERMINT_LINK/version/types.proto" > "$PROTO_TENDERMINT_VERSION/types.p
 # Cosmos Protobuf files
 curl "$COSMOS_LINK/auth/v1beta1/auth.proto" > "$PROTO_COSMOS_AUTH_V1BETA1/auth.proto"
 curl "$COSMOS_LINK/auth/v1beta1/query.proto" > "$PROTO_COSMOS_AUTH_V1BETA1/query.proto"
+curl "$COSMOS_LINK/bank/v1beta1/bank.proto" > "$PROTO_COSMOS_BANK_V1BETA1/bank.proto"
+curl "$COSMOS_LINK/bank/v1beta1/query.proto" > "$PROTO_COSMOS_BANK_V1BETA1/query.proto"
+curl "$COSMOS_LINK/bank/v1beta1/tx.proto" > "$PROTO_COSMOS_BANK_V1BETA1/tx.proto"
 curl "$COSMOS_LINK/base/query/v1beta1/pagination.proto" > "$PROTO_COSMOS_BASE_QUERY_V1BETA1/pagination.proto"
 curl "$COSMOS_LINK/base/v1beta1/coin.proto" > "$PROTO_COSMOS_BASE_V1BETA1/coin.proto"
 curl "$COSMOS_LINK/crypto/multisig/v1beta1/multisig.proto" > "$PROTO_COSMOS_CRYPTO_MULTISIG_V1BETA1/multisig.proto"

@@ -5,7 +5,7 @@ OUT=lib/src/codec
 PROTO=proto
 
 # Get the missing Protobuf types files
-sh ./scripts/get_proto.sh "$PROTO"
+sh ./tool/get_proto.sh "$PROTO"
 
 # Create required folders
 rm -r -f "$OUT"
@@ -26,4 +26,4 @@ find "$OUT" -name "*.pbserver.dart" -type f -delete
 # rm -rf "$PROTO"
 
 # Generate exports
-sh ./scripts/generate_exports.sh "$OUT"
+sh ./tool/generate_exports.sh "$OUT"

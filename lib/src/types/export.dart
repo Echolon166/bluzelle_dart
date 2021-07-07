@@ -1,5 +1,11 @@
 export 'package:bluzelle_dart/src/codec/cosmos/auth/v1beta1/export.dart'
+    show BaseAccount, QueryAccountRequest;
+export 'package:bluzelle_dart/src/codec/cosmos/bank/v1beta1/export.dart'
     hide
+        MsgApi,
+        MsgServiceBase$json,
+        msgServiceDescriptor,
+        MsgServiceBase$messageJson,
         QueryApi,
         QueryServiceBase$json,
         queryServiceDescriptor,
@@ -10,6 +16,10 @@ export 'package:bluzelle_dart/src/codec/cosmos/tx/signing/v1beta1/export.dart';
 export 'package:bluzelle_dart/src/codec/cosmos/tx/v1beta1/export.dart';
 export 'package:bluzelle_dart/src/codec/crud/export.dart'
     hide
+        MsgApi,
+        MsgServiceBase$json,
+        msgServiceDescriptor,
+        MsgServiceBase$messageJson,
         QueryApi,
         QueryServiceBase$json,
         queryServiceDescriptor,

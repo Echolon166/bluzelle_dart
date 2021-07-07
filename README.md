@@ -61,7 +61,7 @@ void main() {
 
 ### Sdk Hierarchy
 
-_After configuring your sdk, you will have access to various modules and their corresponding methods._
+After configuring your sdk, you will have access to various modules and their corresponding methods.
 
 - **Hierarchical format:**
 
@@ -69,12 +69,12 @@ _After configuring your sdk, you will have access to various modules and their c
 sdk.[module].[q or tx or field].[method](ClientContext, MethodRequest(...request fields))
 ```
 
-- **Available Modules:** db
+- **Available Modules:** db, bank
 - **Available Fields:** url, address, withTransactions()
 
 ### Queries
 
-_Each method takes two parameters(ClientContext and MethodRequest) as objects (i.e. Method(ClientContext, MethodRequest)), and returns an object (i.e. MethodResponse). To see the MethodRequest and MethodResponse types, see the [/proto/[module]](proto) for queries and transactions._
+Each method takes two parameters(ClientContext and MethodRequest) as objects (i.e. Method(ClientContext, MethodRequest)), and returns an object (i.e. MethodResponse). To see the MethodRequest and MethodResponse types, see the [/proto/[module]](proto) for queries and transactions.
 
 \*Note: ClientContext is used to set timeout of the RPC call, this method is not included in the library and can be passed as a `null`.
 
@@ -97,9 +97,21 @@ sdk.db.q.read(
 
 \*Note: resp.value is a List\<int\> representing the byte-encoded value that had been queried. To get the string-representation of the value, use utf8.decode(resp.value).
 
+- Bank module query:
+
+```dart
+sdk.bank.q.balance(
+  null,
+  QueryBalanceRequest(
+    address: sdk.bank.address,      // You can access your sdk's bluzelle address.
+    denom: 'ubnt',
+  ),
+);
+```
+
 ### Transactions
 
-_The sdk can also send transactions to the chain. Each module has a tx method to send various transaction messages._
+The sdk can also send transactions to the chain. Each module has a tx method to send various transaction messages.
 
 - Crud module tx:
 
@@ -123,9 +135,27 @@ sdk.db.tx.create_(
 
 \*\*Note: See [lease.pb.dart](lib/src/codec/crud/lease.pb.dart) to see the Lease class.
 
+- Bank module tx:
+
+```dart
+sdk.bank.tx.send(
+  null,
+  MsgSend(
+    amount: [
+      Coin(
+        denom: 'ubnt',
+        amount: '300',
+      ),
+    ],
+    fromAddress: sdk.bank.address,
+    toAddress: [some_bluzelle_address],
+  ),
+);
+```
+
 ### withTransactions([...])
 
-_Wrap multiple messages in a single transaction._
+Wrap multiple messages in a single transaction.
 
 ```dart
 sdk.db.withTransactions(
@@ -965,9 +995,9 @@ Returns: Future\<QuerySearchResponse\>
 
 ## Development
 
-To download required Protobuf files and generate their implementations => `./scripts/generate_proto.sh`
+To download required Protobuf files and generate their implementations => `./tool/generate_proto.sh`
 
-If you want to include new Protobuf files, you can add them to the => `./scripts/get_proto.sh`
+If you want to include new Protobuf files, you can add them to the => `./tool/get_proto.sh`
 
 To rebuild the generated code (e.g. for JSON serialisation) => `dart pub run build_runner build`
 

@@ -34,20 +34,175 @@ Future<void> populateUuid(BluzelleSdk sdk) async {
   );
 }
 
-// TODO: diffCostForLeaseChange()
+Future<int> diffCostForLeaseChange(BluzelleSdk sdk) async {
+  var firstCost = 0;
 
-// TODO: diffCostForEqualSizeCreates()
+  await sdk.bank.q
+      .balance(
+        null,
+        QueryBalanceRequest(
+          address: sdk.db.address,
+          denom: 'ubnt',
+        ),
+      )
+      .then((resp) => int.parse(resp.balance.amount))
+      .then((amt) => firstCost += amt)
+      .then((_) => print("\nCreating key: shortLeaseKey, value: someValue"))
+      .then(
+        (_) => sdk.db.tx.create_(
+          null,
+          MsgCreate(
+            creator: sdk.db.address,
+            uuid: uuid,
+            key: 'shortLeaseKey',
+            value: utf8.encode('someValue'),
+            lease: Lease(hours: 1),
+          ),
+        ),
+      )
+      .then(
+        (_) => sdk.bank.q.balance(
+          null,
+          QueryBalanceRequest(
+            address: sdk.db.address,
+            denom: 'ubnt',
+          ),
+        ),
+      )
+      .then((resp) => int.parse(resp.balance.amount))
+      .then((amt) => firstCost -= amt)
+      .then((value) => print('Cost of create with short lease: $value'));
+
+  var secondCost = 0;
+
+  await sdk.bank.q
+      .balance(
+        null,
+        QueryBalanceRequest(
+          address: sdk.db.address,
+          denom: 'ubnt',
+        ),
+      )
+      .then((resp) => int.parse(resp.balance.amount))
+      .then((amt) => secondCost += amt)
+      .then((_) => print('\nCreating key: longLeaseKey, value: someValue'))
+      .then(
+        (_) => sdk.db.tx.create_(
+          null,
+          MsgCreate(
+            creator: sdk.db.address,
+            uuid: uuid,
+            key: 'longLeaseKey',
+            value: utf8.encode(
+              'someValue',
+            ),
+            lease: Lease(days: 1),
+          ),
+        ),
+      )
+      .then(
+        (_) => sdk.bank.q.balance(
+          null,
+          QueryBalanceRequest(
+            address: sdk.db.address,
+            denom: 'ubnt',
+          ),
+        ),
+      )
+      .then((resp) => int.parse(resp.balance.amount))
+      .then((amt) => secondCost -= amt)
+      .then((value) => print('Cost of create with long lease: $value'));
+
+  return secondCost - firstCost;
+}
+
+Future<int> diffCostForEqualSizeCreates(BluzelleSdk sdk) async {
+  var firstCost = 0;
+
+  await sdk.bank.q
+      .balance(
+        null,
+        QueryBalanceRequest(
+          address: sdk.db.address,
+          denom: 'ubnt',
+        ),
+      )
+      .then((resp) => int.parse(resp.balance.amount))
+      .then((amt) => firstCost += amt)
+      .then((_) => print('\nCreating key: someKeyA, value: someValue'))
+      .then(
+        (_) => sdk.db.tx.create_(
+          null,
+          MsgCreate(
+            creator: sdk.db.address,
+            uuid: uuid,
+            key: 'someKeyA',
+            value: utf8.encode('someValue'),
+            lease: Lease(hours: 1),
+          ),
+        ),
+      )
+      .then(
+        (_) => sdk.bank.q.balance(
+          null,
+          QueryBalanceRequest(
+            address: sdk.db.address,
+            denom: 'ubnt',
+          ),
+        ),
+      )
+      .then((resp) => int.parse(resp.balance.amount))
+      .then((amt) => firstCost -= amt)
+      .then((value) => print('Cost of first create: $value'));
+
+  var secondCost = 0;
+
+  await sdk.bank.q
+      .balance(
+        null,
+        QueryBalanceRequest(
+          address: sdk.db.address,
+          denom: 'ubnt',
+        ),
+      )
+      .then((resp) => int.parse(resp.balance.amount))
+      .then((amt) => secondCost += amt)
+      .then((_) => print('\nCreating key: someKeyB, value: someValue'))
+      .then(
+        (_) => sdk.db.tx.create_(
+          null,
+          MsgCreate(
+            creator: sdk.db.address,
+            uuid: uuid,
+            key: 'someKeyB',
+            value: utf8.encode('someValue'),
+            lease: Lease(hours: 1),
+          ),
+        ),
+      )
+      .then(
+        (_) => sdk.bank.q.balance(
+          null,
+          QueryBalanceRequest(
+            address: sdk.db.address,
+            denom: 'ubnt',
+          ),
+        ),
+      )
+      .then((resp) => int.parse(resp.balance.amount))
+      .then((amt) => secondCost -= amt)
+      .then((value) => print('Cost of second create: $value'));
+
+  return firstCost - secondCost;
+}
 
 final uuid = DateTime.now().millisecondsSinceEpoch.toString();
 
 Future<void> main() async {
   final sdk = bluzelle(
-    /* TODO: mnemonic:
-        'switch wing oven chat cargo smile hello broken fluid puzzle endorse family divorce boat viable mutual film steel future casino economy lens december roast',
-    host: 'wss://client.sentry.testnet.private.bluzelle.com', */
-    host: 'http://localhost',
     mnemonic:
-        'purpose month upgrade carpet cactus pink private target afford denial luxury club rocket spice test lesson wave skirt identify impose dilemma maximum slogan radar',
+        'switch wing oven chat cargo smile hello broken fluid puzzle endorse family divorce boat viable mutual film steel future casino economy lens december roast',
+    host: 'wss://client.sentry.testnet.private.bluzelle.com',
     port: 26657,
     maxGas: 100000000,
     gasPrice: 0.002,
@@ -123,9 +278,11 @@ Future<void> main() async {
       .then(
           (keyValues) => print('\nReading all values in $uuid:\n $keyValues'));
 
-  // TODO: diffCostForEqualSizeCreates()
+  await diffCostForEqualSizeCreates(sdk).then((value) =>
+      print('\nTotal cost difference for creates of equal size: $value'));
 
-  // TODO: diffCostForLeaseChange()
+  await diffCostForLeaseChange(sdk).then(
+      (value) => print('\nTotal cost difference for 1 day vs. 1 hour: $value'));
 
   await sdk.db.q
       .search(
