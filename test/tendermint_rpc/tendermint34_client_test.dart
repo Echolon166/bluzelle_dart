@@ -8,8 +8,8 @@ import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/bluzelle_dart.dart';
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
+import 'package:bluzelle_dart/src/types/export.dart';
 import 'tendermint34_client_test.mocks.dart';
 
 @GenerateMocks([Tendermint34Client])

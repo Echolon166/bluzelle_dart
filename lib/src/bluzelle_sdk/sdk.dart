@@ -8,14 +8,14 @@ class Sdk<Q, M> {
   M tx;
   String address;
   String url;
-  Function withTransaction;
+  Function withTransactions;
 
   Sdk({
     required this.q,
     required this.tx,
     required this.address,
     required this.url,
-    required this.withTransaction,
+    required this.withTransactions,
   });
 }
 
@@ -36,6 +36,6 @@ Sdk<Q, M> sdk<Q, M>({
     tx: mApi(mClient),
     address: wallet.bech32Address,
     url: wallet.networkInfo.url,
-    withTransaction: mClient.invokeBatch,
+    withTransactions: mClient.invokeBatch,
   );
 }
