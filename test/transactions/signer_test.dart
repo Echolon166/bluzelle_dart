@@ -14,7 +14,7 @@ import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/transactions/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
 import 'package:bluzelle_dart/src/wallet/export.dart';
-import 'tx_signer_test.mocks.dart';
+import 'signer_test.mocks.dart';
 
 @GenerateMocks([Tendermint34Client, NetworkInfo])
 void main() {
@@ -26,7 +26,8 @@ void main() {
     networkInfo = MockNetworkInfo();
   });
 
-  final mnemonic = 'purpose month upgrade carpet cactus pink private target afford denial luxury club rocket spice test lesson wave skirt identify impose dilemma maximum slogan radar';
+  final mnemonic =
+      'purpose month upgrade carpet cactus pink private target afford denial luxury club rocket spice test lesson wave skirt identify impose dilemma maximum slogan radar';
   final accountData = [10, 47, 98, 108, 117, 122, 101, 108, 108, 101, 49, 121, 118, 52, 110, 108, 110, 107, 116, 119, 100, 120, 108, 106, 108, 109, 115, 110, 112, 102, 106, 100, 116, 51, 99, 48, 50, 118, 110, 108, 120, 113, 97, 53, 54, 56, 112, 108, 103];
   final accountResponseData = [10, 159, 1, 10, 32, 47, 99, 111, 115, 109, 111, 115, 46, 97, 117, 116, 104, 46, 118, 49, 98, 101, 116, 97, 49, 46, 66, 97, 115, 101, 65, 99, 99, 111, 117, 110, 116, 18, 123, 10, 47, 98, 108, 117, 122, 101, 108, 108, 101, 49, 121, 118, 52, 110, 108, 110, 107, 116, 119, 100, 120, 108, 106, 108, 109, 115, 110, 112, 102, 106, 100, 116, 51, 99, 48, 50, 118, 110, 108, 120, 113, 97, 53, 54, 56, 112, 108, 103, 18, 70, 10, 31, 47, 99, 111, 115, 109, 111, 115, 46, 99, 114, 121, 112, 116, 111, 46, 115, 101, 99, 112, 50, 53, 54, 107, 49, 46, 80, 117, 98, 75, 101, 121, 18, 35, 10, 33, 2, 244, 230, 94, 145, 138, 184, 194, 149, 221, 159, 113, 233, 240, 204, 115, 65, 184, 110, 248, 95, 213, 191, 21, 235, 232, 220, 89, 236, 27, 94, 244, 177, 32, 27];
 

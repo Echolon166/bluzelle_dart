@@ -1,2 +1,2 @@
-export 'query_client/export.dart';
-export 'transaction_client/export.dart';
+export 'query_client.dart';
+export 'transaction_client.dart';

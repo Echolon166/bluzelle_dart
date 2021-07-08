@@ -39,7 +39,7 @@ class StatusResponse extends Equatable {
 
   @override
   String toString() {
-    return '{ '
+    return 'StatusResponse { '
         'nodeInfo: $nodeInfo '
         '}';
   }
@@ -75,7 +75,7 @@ class NodeInfo extends Equatable {
 
   @override
   String toString() {
-    return 'NodeInfo {'
+    return 'NodeInfo { '
         'network: $network '
         '}';
   }
@@ -104,7 +104,7 @@ class BroadcastTxSyncResponse extends Equatable {
 
   @override
   String toString() {
-    return '{ '
+    return 'BroadcastTxSyncResponse { '
         'hash: $hash '
         '}';
   }
@@ -142,7 +142,7 @@ class TxSearchResponse extends Equatable {
 
   @override
   String toString() {
-    return '{ '
+    return 'TxSearchResponse { '
         'txs: $txs, '
         'totalCount: $totalCount, '
         '}';
@@ -191,7 +191,7 @@ class TxResponse extends Equatable {
 
   @override
   String toString() {
-    return 'TxResponse {'
+    return 'TxResponse { '
         'hash: $hash, '
         'txResult: $txResult, '
         'tx: $tx '
@@ -244,7 +244,7 @@ class TxResult extends Equatable {
 
   @override
   String toString() {
-    return 'TxResult {'
+    return 'TxResult { '
         'code: $code, '
         'log: $log, '
         'codeSpace: $codeSpace, '
@@ -277,7 +277,7 @@ class Event extends Equatable {
 
   @override
   String toString() {
-    return 'Event {'
+    return 'Event { '
         'type: $type '
         '}';
   }

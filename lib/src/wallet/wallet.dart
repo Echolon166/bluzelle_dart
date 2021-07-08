@@ -209,7 +209,7 @@ class Wallet extends Equatable {
 
   @override
   String toString() {
-    return '{ '
+    return 'Wallet { '
         'networkInfo: $networkInfo, '
         'address: $address, '
         'publicKey: $publicKey '

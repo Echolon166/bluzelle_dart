@@ -1,3 +1,3 @@
-export 'requests/export.dart';
-export 'responses/export.dart';
+export 'requests.dart';
+export 'responses.dart';
 export 'tendermint34_client.dart';

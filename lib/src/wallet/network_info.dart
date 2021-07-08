@@ -128,7 +128,7 @@ class NetworkInfo extends Equatable {
 
   @override
   String toString() {
-    return '{ '
+    return 'NetworkInfo { '
         'bech32Hrp: $bech32Hrp, '
         'tendermintRpcInfo: $tendermintRpcInfo, '
         '}';

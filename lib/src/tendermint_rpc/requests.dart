@@ -43,38 +43,38 @@ extension RequestMethodExtension on RequestMethod {
         return 'abci_info';
       case RequestMethod.abciQuery:
         return 'abci_query';
-      case RequestMethod.block:
-        return 'block';
-      case RequestMethod.blockchain:
-        return 'blockchain';
-      case RequestMethod.blockResults:
-        return 'block_results';
-      case RequestMethod.blockSearch:
-        return 'block_search';
-      case RequestMethod.broadcastTxAsync:
-        return 'broadcast_tx_async';
+      /* case RequestMethod.block:
+        return 'block'; */
+      /* case RequestMethod.blockchain:
+        return 'blockchain'; */
+      /* case RequestMethod.blockResults:
+        return 'block_results'; */
+      /* case RequestMethod.blockSearch:
+        return 'block_search'; */
+      /* case RequestMethod.broadcastTxAsync:
+        return 'broadcast_tx_async'; */
       case RequestMethod.broadcastTxSync:
         return 'broadcast_tx_sync';
-      case RequestMethod.broadcastTxCommit:
-        return 'broadcast_tx_commit';
-      case RequestMethod.commit:
-        return 'commit';
-      case RequestMethod.genesis:
-        return 'genesis';
-      case RequestMethod.health:
-        return 'health';
+      /* case RequestMethod.broadcastTxCommit:
+        return 'broadcast_tx_commit'; */
+      /* case RequestMethod.commit:
+        return 'commit'; */
+      /* case RequestMethod.genesis:
+        return 'genesis'; */
+      /* case RequestMethod.health:
+        return 'health'; */
       case RequestMethod.status:
         return 'status';
-      case RequestMethod.subscribe:
-        return 'subscribe';
-      case RequestMethod.tx:
-        return 'tx';
+      /* case RequestMethod.subscribe:
+        return 'subscribe'; */
+      /* case RequestMethod.tx:
+        return 'tx'; */
       case RequestMethod.txSearch:
         return 'tx_search';
-      case RequestMethod.validators:
-        return 'validators';
-      case RequestMethod.unsubscribe:
-        return 'unsubscribe';
+      /* case RequestMethod.validators:
+        return 'validators'; */
+      /* case RequestMethod.unsubscribe:
+        return 'unsubscribe'; */
       default:
         return '';
     }
@@ -106,7 +106,7 @@ class BroadcastTxSyncRequest extends Equatable {
 
   @override
   String toString() {
-    return '{ '
+    return 'BroadcastTxSyncRequest { '
         'tx: $tx '
         '}';
   }
@@ -155,7 +155,7 @@ class TxSearchRequest extends Equatable {
 
   @override
   String toString() {
-    return '{ '
+    return 'TxSearchRequest { '
         'query: $query, '
         'prove: $prove, '
         'page: $page, '
