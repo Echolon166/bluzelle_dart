@@ -22,3 +22,7 @@ doc/api/
 
 # VS Code
 .vscode
+
+# Codecov
+coverage/
+test/.test_coverage.dart

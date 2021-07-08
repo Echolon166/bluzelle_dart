@@ -1,5 +1,7 @@
 # Bluzelle Dart SDK
 
+[![codecov](https://codecov.io/gh/Echolon166/bluzelle_dart/branch/main/graph/badge.svg?token=NXBSZBODD8)](https://codecov.io/gh/Echolon166/bluzelle_dart)
+
 Dart package for interfacing with the Bluzelle database service, modelled after [@bluzelle/sdk-js](https://github.com/bluzelle/curium/tree/stargate/sdk/ts).
 
 ## Installation

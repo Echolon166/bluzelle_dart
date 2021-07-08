@@ -1,0 +1,54 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - "**"
+      - "!gh-pages"
+
+jobs:
+  Unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Setup 🔨
+        uses: cedx/setup-dart@v2
+
+      - name: Get dependencies 📥
+        run: pub get
+
+      - name: Test 🔧
+        run: |
+          pub global activate coverage
+
+          dart tool/collect_tests.dart
+          pub run test --coverage=coverage test/.test_coverage.dart
+          pub global run coverage:format_coverage --packages=.packages -i coverage/test/.test_coverage.dart.vm.json --lcov > coverage/lcov.info
+
+      - name: Clean coverage 🧹
+        run: |
+          pub global activate remove_from_coverage
+
+          # Exclude the .pub-cache
+          pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '/.pub-cache/'
+
+          # Exclude all g.dart files
+          pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.g.dart$'
+
+          # Exclude the proto files
+          pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '/proto/'
+
+          # Exclude the test folder
+          pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '/test/'
+
+          # Exclude the codec folder
+          pub global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '/lib/src/codec/'
+
+      - name: Upload coverage 📤
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage/lcov.info
+          fail_ci_if_error: true
