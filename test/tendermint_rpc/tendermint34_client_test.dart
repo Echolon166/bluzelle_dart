@@ -1,75 +1,191 @@
 // Dart imports:
+import 'dart:convert';
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 
 // Project imports:
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
+import 'package:bluzelle_dart/src/transactions/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
-import 'tendermint34_client_test.mocks.dart';
+import 'package:bluzelle_dart/src/wallet/export.dart';
+import '../test_helpers.dart';
 
-@GenerateMocks([Tendermint34Client])
 void main() {
-  late Tendermint34Client tendermint34Client;
+  group('Tendermint34Client.connect()', () {
+    test('HTTPS host works properly.', () {
+      final tendermint34Client = Tendermint34Client.connect(
+        host: 'https://client.sentry.testnet.private.bluzelle.com',
+        port: 26657,
+      );
 
-  setUp(() {
-    tendermint34Client = MockTendermint34Client();
+      expect(
+        tendermint34Client.abciInfo().then(
+          (value) {
+            expect(value, TypeMatcher<ResponseInfo>());
+            return value;
+          },
+        ).then((value) => expect(value.data, isNotEmpty)),
+        completes,
+      );
+    });
+
+    test('WSS host works properly.', () {
+      final tendermint34Client = Tendermint34Client.connect(
+        host: 'wss://client.sentry.testnet.private.bluzelle.com',
+        port: 26657,
+      );
+
+      expect(
+        tendermint34Client.abciInfo().then(
+          (resp) {
+            expect(resp, TypeMatcher<ResponseInfo>());
+            return resp;
+          },
+        ).then((resp) => expect(resp.data, isNotNull)),
+        completes,
+      );
+    });
   });
 
-  test('abciInfo() works properly.', () async {
-    when(tendermint34Client.abciInfo()).thenAnswer(
-      (_) => Future.value(ResponseInfo(data: 'test')),
-    );
+  group('Tendermint34Client method', () {
+    late Tendermint34Client tendermint34Client;
 
-    final info = await tendermint34Client.abciInfo();
+    setUp(() {
+      tendermint34Client = Tendermint34Client.connect(
+        host: 'https://client.sentry.testnet.private.bluzelle.com',
+        port: 26657,
+      );
+    });
 
-    expect(info.data, 'test');
-  });
+    group('abciQuery()', () {
+      test('works properly.', () {
+        expect(
+          tendermint34Client
+              .abciQuery(
+                  path: '/bluzelle.curium.crud.Query/Count',
+                  data: QueryCountRequest(uuid: 'erlo').writeToBuffer())
+              .then(
+            (resp) {
+              expect(resp, TypeMatcher<ResponseQuery>());
+              return resp;
+            },
+          ).then(
+            (resp) => expect(
+              QueryCountResponse.fromBuffer(resp.value).count,
+              isNotNull,
+            ),
+          ),
+          completes,
+        );
+      });
 
-  test('abciQuery() works properly.', () async {
-    final testData = Uint8List.fromList([1, 2, 3]);
-    final responseData = Uint8List.fromList([4, 5, 6]);
+      test('throws an error if incorrect path.', () {
+        expect(
+          tendermint34Client.abciQuery(
+              path: '/hopefully_incorrect_path/a3o51n4u5',
+              data: QueryCountRequest(uuid: 'erlo').writeToBuffer()),
+          throwsException,
+        );
+      });
 
-    when(tendermint34Client.abciQuery(
-      path: 'test_path',
-      data: testData,
-    )).thenAnswer(
-      (_) => Future.value(ResponseQuery(value: responseData)),
-    );
+      test('throws an error if incorrect data.', () {
+        expect(
+          tendermint34Client.abciQuery(
+              path: '/bluzelle.curium.crud.Query/Count',
+              data: Uint8List.fromList([1, -1, 1, -1, 5555, -5555])),
+          throwsException,
+        );
+      });
+    });
 
-    final query = await tendermint34Client.abciQuery(
-      path: 'test_path',
-      data: testData,
-    );
+    test('status() works properly.', () {
+      expect(
+        tendermint34Client.status().then(
+              (resp) => expect(
+                resp.nodeInfo.network,
+                isNotNull,
+              ),
+            ),
+        completes,
+      );
+    });
 
-    expect(query.value, responseData);
-  });
+    group('broadcastTxSync()', () {
+      test('works properly.', () {
+        final wallet = Wallet.derive(
+          mnemonic:
+              'layer lawn amount disorder camp coast private brush slogan wasp finish detail excuse void border expand vibrant cable vibrant neutral furnace hat erupt thank'
+                  .split(' '),
+          networkInfo: NetworkInfo.fromHost(
+            host: 'wss://client.sentry.testnet.private.bluzelle.com',
+          ),
+        );
 
-  test('status() works properly.', () async {
-    when(tendermint34Client.status()).thenAnswer(
-      (_) => Future.value(StatusResponse(nodeInfo: NodeInfo(network: 'test'))),
-    );
+        final request = MsgCreate(
+          creator: wallet.bech32Address,
+          uuid: dateNow,
+          key: getRandomString(10),
+          value: utf8.encode('testValue'),
+          lease: Lease(seconds: 1),
+        );
 
-    final status = await tendermint34Client.status();
+        expect(
+          TxSigner()
+              .createAndSign(
+                wallet: wallet,
+                msgs: [request],
+                fee: Fee(
+                  gasLimit: 100000000.toInt64(),
+                  amount: [
+                    Coin(
+                      denom: 'ubnt',
+                      amount: '200000',
+                    ),
+                  ],
+                ),
+                memo: 'memo',
+              )
+              .then((signedTx) => tendermint34Client.broadcastTxSync(
+                    tx: (signedTx).writeToBuffer(),
+                  )),
+          completes,
+        );
+      });
 
-    expect(status.nodeInfo.network, 'test');
-  });
+      test('throws exception if incorrect tx.', () {
+        expect(
+          tendermint34Client.broadcastTxSync(
+            tx: Uint8List.fromList([1, 2, 3]),
+          ),
+          throwsException,
+        );
+      });
+    });
 
-  test('broadcastTxSync() works properly.', () async {
-    final tx = Uint8List.fromList([1, 2, 3]);
-    final hash = Uint8List.fromList([4, 5, 6]);
-    when(tendermint34Client.broadcastTxSync(tx: tx)).thenAnswer(
-      (_) => Future.value(
-        BroadcastTxSyncResponse(hash: hash),
-      ),
-    );
+    group('txSearch()', () {
+      test('works properly.', () {
+        expect(
+            tendermint34Client
+                .txSearch(
+                  query:
+                      "tx.hash='CCD0A2BC95061D1471EA2DFB81631E8BE78AB743DB763F47C74DB316DAD70048'",
+                  prove: true,
+                )
+                .then((value) => expect(value.txs, isNotEmpty)),
+            completes);
+      });
 
-    final response = await tendermint34Client.broadcastTxSync(tx: tx);
+      test('throws an error if incorrect query.', () {
+        expect(
+          tendermint34Client.txSearch(query: 'incorrectQuery'),
+          throwsException,
+        );
+      });
+    });
 
-    expect(response.hash, hash);
+    tearDownAll(() => tendermint34Client.close());
   });
 }

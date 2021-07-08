@@ -22,6 +22,7 @@ import 'package:bluzelle_dart/src/utils/export.dart';
 class Tendermint34Client extends pb.RpcClient {
   final rpc.Client _client;
 
+  /// Initialize by calling [Tendermint34Client.connect].
   Tendermint34Client(this._client);
 
   /// Creates a new [Tendermint34Client] instance for given host and port.
@@ -54,7 +55,8 @@ class Tendermint34Client extends pb.RpcClient {
     required dynamic response,
   }) {
     if (response["code"] != null && response["code"] != 0) {
-      throw ('$request call failed with code ${response["code"]} (codespace: ${response["codeSpace"]}, log: ${response["log"]}.');
+      throw Exception(
+          '$request call failed with code ${response["code"]} (codespace: ${response["codeSpace"]}, log: ${response["log"]}.');
     }
   }
 

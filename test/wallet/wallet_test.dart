@@ -26,7 +26,7 @@ void main() {
         'enforce cheese arctic knock defense hamster flame donor comfort tent usual ship problem churn pottery paper often end change ladder width rule this blood',
   };
 
-  group('Derive', () {
+  group('Wallet derive', () {
     test('throws exception with invalid mnemonic.', () {
       expect(
         () => Wallet.derive(
@@ -51,32 +51,9 @@ void main() {
 
     test('with different derivation path works properly.', () {
       final info = NetworkInfo.fromHost(hrp: 'desmos', host: '');
-      final mnemonic = [
-        'roast',
-        'stomach',
-        'welcome',
-        'please',
-        'gauge',
-        'funny',
-        'coconut',
-        'baby',
-        'bird',
-        'announce',
-        'bind',
-        'jacket',
-        'title',
-        'vibrant',
-        'tomorrow',
-        'indoor',
-        'bitter',
-        'initial',
-        'ill',
-        'analyst',
-        'thought',
-        'strike',
-        'answer',
-        'cotton',
-      ];
+      final mnemonic =
+          'roast stomach welcome please gauge funny coconut baby bird announce bind jacket title vibrant tomorrow indoor bitter initial ill analyst thought strike answer cotton'
+              .split(' ');
       final wallet = Wallet.derive(
         mnemonic: mnemonic,
         networkInfo: info,
@@ -90,7 +67,7 @@ void main() {
     });
   });
 
-  test('Random generates different wallets.', () {
+  test('Wallet random generates different wallets.', () {
     final info = NetworkInfo.fromHost(host: 'example.com');
     final wallets =
         List.generate(20, (index) => Wallet.random(networkInfo: info));
@@ -104,7 +81,7 @@ void main() {
     expect(map.entries, hasLength(wallets.length));
   });
 
-  test('Convert works properly.', () {
+  test('Wallet convert works properly.', () {
     final mnemonic =
         'trip focus improve census orchard april lounge dream chapter pen lyrics release demise salmon cherry wisdom author bulb vanish finish cannon spider wool enter';
     final bluzelleAddr = 'bluzelle1gxxtd9x9yhhtwfz33t8dyllef4lll5dvc7rdxn';
@@ -124,7 +101,7 @@ void main() {
     expect(converted.bech32Address, godzelleAddr);
   });
 
-  test('toJson and fromJson works properly.', () {
+  test('Wallet toJson and fromJson works properly.', () {
     final mnemonic =
         'trip focus improve census orchard april lounge dream chapter pen lyrics release demise salmon cherry wisdom author bulb vanish finish cannon spider wool enter';
     final wallet = Wallet.derive(
@@ -142,7 +119,7 @@ void main() {
     expect(wallet, retrivedWallet);
   });
 
-  test('Sign generates deterministic signatures.', () {
+  test('Wallet sign generates deterministic signatures.', () {
     final info = NetworkInfo.fromHost(host: '');
     final mnemonic =
         'zoo brown genre claim organ figure move rain predict police virus pact slice decade useful home armed service child avoid age blame bean initial';

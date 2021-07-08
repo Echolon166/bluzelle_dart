@@ -60,7 +60,7 @@ class TransactionClient extends pb.RpcClient {
     //  this function will only call it, and will add [methodName] at the
     //  start of the error, if there is any.
     await invokeBatch([request])
-        .catchError((error) => throw ("$methodName $error"));
+        .catchError((error) => throw Exception("$methodName $error"));
 
     return emptyResponse;
   }
@@ -108,7 +108,8 @@ class TransactionClient extends pb.RpcClient {
     if (response.totalCount > 0) {
       final txResult = response.txs[0].txResult;
       if (txResult.code != 0 || txResult.events.isEmpty) {
-        throw ('call failed with code ${txResult.code} (log: ${txResult.log}, codespace: ${txResult.codeSpace})');
+        throw Exception(
+            'call failed with code ${txResult.code} (log: ${txResult.log}, codespace: ${txResult.codeSpace})');
       }
     }
 
@@ -129,7 +130,8 @@ class TransactionClient extends pb.RpcClient {
     var elapsedMilliseconds = 0;
     while (await _pollForTx(transactionHash: transactionHash)) {
       if (elapsedMilliseconds >= timeoutMs) {
-        throw ('Transaction with hash $transactionHash was submitted but was not yet found on the chain. You might want to check later.');
+        throw Exception(
+            'Transaction with hash $transactionHash was submitted but was not yet found on the chain. You might want to check later.');
       }
 
       await Future.delayed(Duration(milliseconds: pollIntervalMs));

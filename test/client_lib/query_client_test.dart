@@ -1,73 +1,47 @@
-// Dart imports:
-import 'dart:typed_data';
-
 // Package imports:
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 // Project imports:
 import 'package:bluzelle_dart/src/clients/export.dart';
 import 'package:bluzelle_dart/src/codec/crud/export.dart' as crud;
-import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
-import 'query_client_test.mocks.dart';
+import 'package:bluzelle_dart/src/wallet/export.dart';
+import '../test_helpers.dart';
 
-@GenerateMocks([Tendermint34Client])
 void main() {
-  late Tendermint34Client tendermint34Client;
-  late QueryClient queryClient;
-
-  setUp(() {
-    tendermint34Client = MockTendermint34Client();
-    queryClient = QueryClient(tendermint34Client: tendermint34Client);
-  });
-
-  test('Calls with custom GeneratedMessages works properly.', () async {
-    when(tendermint34Client.abciQuery(
-      path: '/bluzelle.curium.crud.Query/Count',
-      data: Uint8List.fromList([10, 4, 116, 101, 115, 116]),
-    )).thenAnswer(
-      (_) => Future.value(
-        ResponseQuery(
-          code: 0,
-          index: 0.toInt64(),
-          value: [10, 4, 116, 101, 115, 116, 16, 1],
-          height: 34079.toInt64(),
-        ),
-      ),
+  test('QueryClient calls with custom GeneratedMessages works properly.', () {
+    final queryClient = QueryClient.connect(
+      host: host,
+      port: port,
     );
 
-    final request = QueryCountRequest(uuid: 'test');
-    final queryResponse = QueryCountResponse();
-    final expectedResponse = QueryCountResponse(uuid: 'test', count: 1);
-
-    await queryClient.invoke(null, 'Query', 'Count', request, queryResponse);
-
-    expect(queryResponse, expectedResponse);
+    expect(
+      queryClient
+          .invoke(null, 'Query', 'Count', QueryCountRequest(uuid: 'test'),
+              QueryCountResponse())
+          .then((resp) => expect(resp, TypeMatcher<QueryCountResponse>())),
+      completes,
+    );
   });
 
-  test('Calls from Protobuf generated APIs work properly.', () async {
-    when(tendermint34Client.abciQuery(
-      path: '/bluzelle.curium.crud.Query/Count',
-      data: Uint8List.fromList([10, 4, 116, 101, 115, 116]),
-    )).thenAnswer(
-      (_) => Future.value(
-        ResponseQuery(
-          code: 0,
-          index: 0.toInt64(),
-          value: [10, 4, 116, 101, 115, 116, 16, 1],
-          height: 34079.toInt64(),
-        ),
-      ),
+  test('QueryClient calls from Protobuf generated APIs work properly.', () {
+    final queryClient = QueryClient.fromNetworkInfo(
+      NetworkInfo.fromHost(host: host),
     );
 
     final queryApi = crud.QueryApi(queryClient);
 
-    final request = QueryCountRequest(uuid: 'test');
-    final queryResponse = await queryApi.count(null, request);
-    final expectedResponse = QueryCountResponse(uuid: 'test', count: 1);
-
-    expect(queryResponse, expectedResponse);
+    expect(
+      queryApi
+          .keys(null, QueryKeysRequest(uuid: 'test'))
+          .then((resp) => expect(resp, TypeMatcher<QueryKeysResponse>())),
+      completes,
+    );
   });
+
+  tearDownAll(
+    () => QueryClient.fromNetworkInfo(
+      NetworkInfo.fromHost(host: host),
+    ).close(),
+  );
 }

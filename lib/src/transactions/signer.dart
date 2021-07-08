@@ -32,7 +32,7 @@ class TxSigner {
     // Set the default fees.
     fee ??= Fee(gasLimit: 200000.toInt64());
     if (!fee.hasGasLimit()) {
-      throw ('Invalid fees: Invalid gas amount specified.');
+      throw Exception('Invalid fees: Invalid gas amount specified.');
     }
 
     // Get the account data.

@@ -18,7 +18,9 @@ Future<BaseAccount?> getAccountData({
   final queryApi = auth.QueryApi(queryClient);
 
   final request = QueryAccountRequest(address: address);
-  final response = await queryApi.account(null, request);
+  final response = await queryApi
+      .account(null, request)
+      .onError((_, __) => QueryAccountResponse());
   if (!response.hasAccount()) {
     return null;
   }

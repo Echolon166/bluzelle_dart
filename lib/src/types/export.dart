@@ -1,5 +1,5 @@
 export 'package:bluzelle_dart/src/codec/cosmos/auth/v1beta1/export.dart'
-    show BaseAccount, QueryAccountRequest;
+    show BaseAccount, QueryAccountRequest, QueryAccountResponse;
 export 'package:bluzelle_dart/src/codec/cosmos/bank/v1beta1/export.dart'
     hide
         MsgApi,

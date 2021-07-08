@@ -49,7 +49,7 @@ class TendermintRpcInfo extends Equatable {
 
   @override
   String toString() {
-    return 'TendermintRpcInfo {'
+    return 'TendermintRpcInfo { '
         'host: $host, '
         'port: $port '
         '}';
@@ -130,7 +130,7 @@ class NetworkInfo extends Equatable {
   String toString() {
     return 'NetworkInfo { '
         'bech32Hrp: $bech32Hrp, '
-        'tendermintRpcInfo: $tendermintRpcInfo, '
+        'tendermintRpcInfo: $tendermintRpcInfo '
         '}';
   }
 }
