@@ -1,6 +1,21 @@
 // Dart imports:
 import 'dart:math';
 
+class MnemonicHelper {
+  late Iterator<String> mnemonicIterator;
+
+  MnemonicHelper(List<String> mnemonicList) {
+    mnemonicIterator = mnemonicList.iterator;
+  }
+
+  List<String> get nextMnemonic {
+    if (!mnemonicIterator.moveNext()) {
+      throw Exception('Load more mnemonic for tests.');
+    }
+    return mnemonicIterator.current.split(' ');
+  }
+}
+
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 Random _rnd = Random();
 

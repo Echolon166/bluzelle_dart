@@ -21,11 +21,22 @@ void main() {
     late String key;
     late pb.GeneratedMessage request;
 
+    late MnemonicHelper mnemonicHelper;
+
     group('transaction_client_test', () {
       setUpAll(() {
-        List<String> mnemonic =
-            'need seat viable busy fancy guitar able beach awkward click silk sugar walk large into fetch lake rice begin wrong swap area vanish token'
-                .split(' ');
+        print('setupall');
+        mnemonicHelper = MnemonicHelper([
+          'need seat viable busy fancy guitar able beach awkward click silk sugar walk large into fetch lake rice begin wrong swap area vanish token',
+          'security speak tray purpose note silver wrestle liar sleep chef dry group wing suspect define during slice since blind copy cube bleak average labor',
+          'wheel debate ready enable become color around rigid among gasp order piano token ski hood nest mixture glove alley flee need ridge melt amateur',
+          'leg hobby session sock split history brick long nice live slam famous doctor clerk pass winter author cross denial slot front stereo hurt amazing',
+        ]);
+      });
+
+      setUp(() {
+        print('setup');
+        List<String> mnemonic = mnemonicHelper.nextMnemonic;
 
         wallet = Wallet.derive(
           mnemonic: mnemonic,
@@ -46,9 +57,7 @@ void main() {
             ),
           ]),
         );
-      });
 
-      setUp(() {
         uuid = dateNow;
         key = getRandomString(10);
 
@@ -64,6 +73,7 @@ void main() {
       test(
           'TransactionClient calls with custom GeneratedMessages work properly.',
           () {
+        print(1);
         expect(
           transactionClient
               .invoke(
@@ -95,6 +105,7 @@ void main() {
       test(
           'TransactionClient calls from Protobuf generated APIs work properly.',
           () {
+        print('2');
         final transactionApi = crud.MsgApi(transactionClient);
 
         expect(
