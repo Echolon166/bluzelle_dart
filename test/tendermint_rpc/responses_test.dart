@@ -8,147 +8,150 @@ import 'package:test/test.dart';
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 
 void main() {
-  group('StatusResponse', () {
-    final statusResponse = StatusResponse(nodeInfo: NodeInfo(network: 'test'));
+  group('responses_test:', () {
+    group('StatusResponse', () {
+      final statusResponse =
+          StatusResponse(nodeInfo: NodeInfo(network: 'test'));
 
-    test('toJson and fromJson works properly.', () {
-      final json = statusResponse.toJson();
-      final fromJson = StatusResponse.fromJson(json);
+      test('toJson and fromJson works properly.', () {
+        final json = statusResponse.toJson();
+        final fromJson = StatusResponse.fromJson(json);
 
-      expect(fromJson, equals(statusResponse));
+        expect(fromJson, equals(statusResponse));
+      });
+
+      test('toString works properly.', () {
+        final expectedString =
+            'StatusResponse { nodeInfo: NodeInfo { network: test } }';
+
+        expect(statusResponse.toString(), equals(expectedString));
+      });
     });
 
-    test('toString works properly.', () {
-      final expectedString =
-          'StatusResponse { nodeInfo: NodeInfo { network: test } }';
+    group('NodeInfo', () {
+      final nodeInfo = NodeInfo(network: 'test');
 
-      expect(statusResponse.toString(), equals(expectedString));
-    });
-  });
+      test('toJson and fromJson works properly.', () {
+        final json = nodeInfo.toJson();
+        final fromJson = NodeInfo.fromJson(json);
 
-  group('NodeInfo', () {
-    final nodeInfo = NodeInfo(network: 'test');
+        expect(fromJson, equals(nodeInfo));
+      });
 
-    test('toJson and fromJson works properly.', () {
-      final json = nodeInfo.toJson();
-      final fromJson = NodeInfo.fromJson(json);
+      test('toString works properly.', () {
+        final expectedString = 'NodeInfo { network: test }';
 
-      expect(fromJson, equals(nodeInfo));
-    });
-
-    test('toString works properly.', () {
-      final expectedString = 'NodeInfo { network: test }';
-
-      expect(nodeInfo.toString(), equals(expectedString));
-    });
-  });
-
-  group('BroadcastTxSyncResponse', () {
-    final broadcastTxSyncResponse =
-        BroadcastTxSyncResponse(hash: Uint8List.fromList([1, 2, 3]));
-    test('toJson and fromJson works properly.', () {
-      final json = broadcastTxSyncResponse.toJson();
-      final fromJson = BroadcastTxSyncResponse.fromJson(json);
-
-      expect(fromJson, equals(broadcastTxSyncResponse));
+        expect(nodeInfo.toString(), equals(expectedString));
+      });
     });
 
-    test('toString works properly.', () {
-      final expectedString = 'BroadcastTxSyncResponse { hash: [1, 2, 3] }';
+    group('BroadcastTxSyncResponse', () {
+      final broadcastTxSyncResponse =
+          BroadcastTxSyncResponse(hash: Uint8List.fromList([1, 2, 3]));
+      test('toJson and fromJson works properly.', () {
+        final json = broadcastTxSyncResponse.toJson();
+        final fromJson = BroadcastTxSyncResponse.fromJson(json);
 
-      expect(broadcastTxSyncResponse.toString(), equals(expectedString));
-    });
-  });
+        expect(fromJson, equals(broadcastTxSyncResponse));
+      });
 
-  group('TxSearchResponse', () {
-    final txSearchResponse = TxSearchResponse(
-      txs: [
-        TxResponse(
-            hash: Uint8List.fromList([1]),
-            txResult: TxResult(code: 5, log: 'test', events: []),
-            tx: Uint8List.fromList([2, 3])),
-        TxResponse(
-            hash: Uint8List.fromList([4, 5]),
-            txResult: TxResult(code: 5, codeSpace: 'testspace', events: []),
-            tx: Uint8List.fromList([6])),
-      ],
-      totalCount: 1,
-    );
+      test('toString works properly.', () {
+        final expectedString = 'BroadcastTxSyncResponse { hash: [1, 2, 3] }';
 
-    test('toJson and fromJson works properly.', () {
-      final json = txSearchResponse.toJson();
-      final fromJson = TxSearchResponse.fromJson(json);
-
-      expect(fromJson, equals(txSearchResponse));
+        expect(broadcastTxSyncResponse.toString(), equals(expectedString));
+      });
     });
 
-    test('toString works properly.', () {
-      final expectedString =
-          'TxSearchResponse { txs: [TxResponse { hash: [1], txResult: TxResult { code: 5, log: test, codeSpace: null, events: [] }, tx: [2, 3] }, TxResponse { hash: [4, 5], txResult: TxResult { code: 5, log: null, codeSpace: testspace, events: [] }, tx: [6] }], totalCount: 1, }';
+    group('TxSearchResponse', () {
+      final txSearchResponse = TxSearchResponse(
+        txs: [
+          TxResponse(
+              hash: Uint8List.fromList([1]),
+              txResult: TxResult(code: 5, log: 'test', events: []),
+              tx: Uint8List.fromList([2, 3])),
+          TxResponse(
+              hash: Uint8List.fromList([4, 5]),
+              txResult: TxResult(code: 5, codeSpace: 'testspace', events: []),
+              tx: Uint8List.fromList([6])),
+        ],
+        totalCount: 1,
+      );
 
-      expect(txSearchResponse.toString(), equals(expectedString));
-    });
-  });
+      test('toJson and fromJson works properly.', () {
+        final json = txSearchResponse.toJson();
+        final fromJson = TxSearchResponse.fromJson(json);
 
-  group('TxResponse', () {
-    final txResponse = TxResponse(
-      hash: Uint8List.fromList([1, 2, 3]),
-      txResult: TxResult(code: 5, log: 'test', events: []),
-      tx: Uint8List.fromList([4, 5, 6]),
-    );
-    test('toJson and fromJson works properly.', () {
-      final json = txResponse.toJson();
-      final fromJson = TxResponse.fromJson(json);
+        expect(fromJson, equals(txSearchResponse));
+      });
 
-      expect(fromJson, equals(txResponse));
-    });
+      test('toString works properly.', () {
+        final expectedString =
+            'TxSearchResponse { txs: [TxResponse { hash: [1], txResult: TxResult { code: 5, log: test, codeSpace: null, events: [] }, tx: [2, 3] }, TxResponse { hash: [4, 5], txResult: TxResult { code: 5, log: null, codeSpace: testspace, events: [] }, tx: [6] }], totalCount: 1, }';
 
-    test('toString works properly.', () {
-      final expectedString =
-          'TxResponse { hash: [1, 2, 3], txResult: TxResult { code: 5, log: test, codeSpace: null, events: [] }, tx: [4, 5, 6] }';
-
-      expect(txResponse.toString(), equals(expectedString));
-    });
-  });
-  group('TxResult', () {
-    final txResult = TxResult(
-      code: 5,
-      log: 'test',
-      events: [
-        Event(type: 'type_test1'),
-        Event(type: 'type_test2'),
-      ],
-    );
-
-    test('toJson and fromJson works properly.', () {
-      final json = txResult.toJson();
-      final fromJson = TxResult.fromJson(json);
-
-      expect(fromJson, equals(txResult));
+        expect(txSearchResponse.toString(), equals(expectedString));
+      });
     });
 
-    test('toString works properly.', () {
-      final expectedString =
-          'TxResult { code: 5, log: test, codeSpace: null, events: [Event { type: type_test1 }, Event { type: type_test2 }] }';
+    group('TxResponse', () {
+      final txResponse = TxResponse(
+        hash: Uint8List.fromList([1, 2, 3]),
+        txResult: TxResult(code: 5, log: 'test', events: []),
+        tx: Uint8List.fromList([4, 5, 6]),
+      );
+      test('toJson and fromJson works properly.', () {
+        final json = txResponse.toJson();
+        final fromJson = TxResponse.fromJson(json);
 
-      expect(txResult.toString(), equals(expectedString));
+        expect(fromJson, equals(txResponse));
+      });
+
+      test('toString works properly.', () {
+        final expectedString =
+            'TxResponse { hash: [1, 2, 3], txResult: TxResult { code: 5, log: test, codeSpace: null, events: [] }, tx: [4, 5, 6] }';
+
+        expect(txResponse.toString(), equals(expectedString));
+      });
     });
-  });
+    group('TxResult', () {
+      final txResult = TxResult(
+        code: 5,
+        log: 'test',
+        events: [
+          Event(type: 'type_test1'),
+          Event(type: 'type_test2'),
+        ],
+      );
 
-  group('Event', () {
-    final event = Event(type: 'test');
+      test('toJson and fromJson works properly.', () {
+        final json = txResult.toJson();
+        final fromJson = TxResult.fromJson(json);
 
-    test('toJson and fromJson works properly.', () {
-      final json = event.toJson();
-      final fromJson = Event.fromJson(json);
+        expect(fromJson, equals(txResult));
+      });
 
-      expect(fromJson, equals(event));
+      test('toString works properly.', () {
+        final expectedString =
+            'TxResult { code: 5, log: test, codeSpace: null, events: [Event { type: type_test1 }, Event { type: type_test2 }] }';
+
+        expect(txResult.toString(), equals(expectedString));
+      });
     });
 
-    test('toString works properly.', () {
-      final expectedString = 'Event { type: test }';
+    group('Event', () {
+      final event = Event(type: 'test');
 
-      expect(event.toString(), equals(expectedString));
+      test('toJson and fromJson works properly.', () {
+        final json = event.toJson();
+        final fromJson = Event.fromJson(json);
+
+        expect(fromJson, equals(event));
+      });
+
+      test('toString works properly.', () {
+        final expectedString = 'Event { type: test }';
+
+        expect(event.toString(), equals(expectedString));
+      });
     });
   });
 }

@@ -9,18 +9,20 @@ import 'package:test/test.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
 
 void main() {
-  group('BigIntExtensions', () {
-    test('toUint8List() works properly', () {
-      final testValue = BigInt.from(5).toUint8List();
+  group('ext_test:', () {
+    group('BigIntExtensions', () {
+      test('toUint8List() works properly', () {
+        final testValue = BigInt.from(5).toUint8List();
 
-      expect(testValue, Uint8List.fromList([5]));
+        expect(testValue, Uint8List.fromList([5]));
+      });
     });
-  });
-  group('IntExtensions', () {
-    test('toInt64() works properly.', () {
-      final testValue = 5.toInt64();
+    group('IntExtensions', () {
+      test('toInt64() works properly.', () {
+        final testValue = 5.toInt64();
 
-      expect(testValue, fixnum.Int64(5));
+        expect(testValue, fixnum.Int64(5));
+      });
     });
   });
 }

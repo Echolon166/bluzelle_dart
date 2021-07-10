@@ -9,43 +9,45 @@ import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
 
 void main() {
-  group('BroadcastTxSyncRequest', () {
-    final broadcastTxSyncRequest =
-        BroadcastTxSyncRequest(tx: Uint8List.fromList([1, 2, 3]));
+  group('requests_test:', () {
+    group('BroadcastTxSyncRequest', () {
+      final broadcastTxSyncRequest =
+          BroadcastTxSyncRequest(tx: Uint8List.fromList([1, 2, 3]));
 
-    test('toJson and fromJson works properly.', () {
-      final json = broadcastTxSyncRequest.toJson();
-      final fromJson = BroadcastTxSyncRequest.fromJson(json);
+      test('toJson and fromJson works properly.', () {
+        final json = broadcastTxSyncRequest.toJson();
+        final fromJson = BroadcastTxSyncRequest.fromJson(json);
 
-      expect(fromJson, equals(broadcastTxSyncRequest));
+        expect(fromJson, equals(broadcastTxSyncRequest));
+      });
+
+      test('toString works properly.', () {
+        final expectedString = 'BroadcastTxSyncRequest { tx: [1, 2, 3] }';
+
+        expect(broadcastTxSyncRequest.toString(), equals(expectedString));
+      });
     });
 
-    test('toString works properly.', () {
-      final expectedString = 'BroadcastTxSyncRequest { tx: [1, 2, 3] }';
+    group('TxSearchRequest', () {
+      final txSearchRequest = TxSearchRequest(
+        query: 'test',
+        prove: false,
+        page: 10.toInt64(),
+        perPage: 20.toInt64(),
+      );
+      test('toJson and fromJson works properly.', () {
+        final json = txSearchRequest.toJson();
+        final fromJson = TxSearchRequest.fromJson(json);
 
-      expect(broadcastTxSyncRequest.toString(), equals(expectedString));
-    });
-  });
+        expect(fromJson, equals(txSearchRequest));
+      });
 
-  group('TxSearchRequest', () {
-    final txSearchRequest = TxSearchRequest(
-      query: 'test',
-      prove: false,
-      page: 10.toInt64(),
-      perPage: 20.toInt64(),
-    );
-    test('toJson and fromJson works properly.', () {
-      final json = txSearchRequest.toJson();
-      final fromJson = TxSearchRequest.fromJson(json);
+      test('toString works properly.', () {
+        final expectedString =
+            'TxSearchRequest { query: test, prove: false, page: 10, perPage: 20 }';
 
-      expect(fromJson, equals(txSearchRequest));
-    });
-
-    test('toString works properly.', () {
-      final expectedString =
-          'TxSearchRequest { query: test, prove: false, page: 10, perPage: 20 }';
-
-      expect(txSearchRequest.toString(), equals(expectedString));
+        expect(txSearchRequest.toString(), equals(expectedString));
+      });
     });
   });
 }
