@@ -39,5 +39,7 @@ void main() {
         completes,
       );
     });
+
+    test('QueryClient throws an error if transaction contains errors.', () {});
   });
 }

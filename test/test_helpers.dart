@@ -8,11 +8,11 @@ class MnemonicHelper {
     mnemonicIterator = mnemonicList.iterator;
   }
 
-  List<String> get nextMnemonic {
+  String get nextMnemonic {
     if (!mnemonicIterator.moveNext()) {
       throw Exception('Load more mnemonic for tests.');
     }
-    return mnemonicIterator.current.split(' ');
+    return mnemonicIterator.current;
   }
 }
 

@@ -5,7 +5,6 @@ import 'dart:typed_data';
 // Package imports:
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:test/scaffolding.dart';
 import 'package:test/test.dart';
 
 // Project imports:

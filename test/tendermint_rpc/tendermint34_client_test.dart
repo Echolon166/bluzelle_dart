@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 // Package imports:
 import 'package:test/expect.dart';
-import 'package:test/scaffolding.dart';
+import 'package:test/test.dart';
 
 // Project imports:
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
