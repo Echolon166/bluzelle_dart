@@ -40,14 +40,14 @@ void main() {
       wallet = Wallet.derive(
         mnemonic: mnemonic,
         networkInfo: NetworkInfo.fromHost(
-          host: host,
+          host: hostWss,
         ),
       );
 
       transactionClient = TransactionClient.connect(
         mnemonic: mnemonic,
         networkInfo: NetworkInfo.fromHost(
-          host: host,
+          host: hostWss,
         ),
         fee: Fee(gasLimit: 100000000.toInt64(), amount: [
           Coin(

@@ -12,7 +12,7 @@ void main() {
   group('query_client_test:', () {
     test('QueryClient calls with custom GeneratedMessages works properly.', () {
       final queryClient = QueryClient.connect(
-        host: host,
+        host: hostHttps,
         port: port,
       );
 
@@ -27,7 +27,7 @@ void main() {
 
     test('QueryClient calls from Protobuf generated APIs work properly.', () {
       final queryClient = QueryClient.fromNetworkInfo(
-        NetworkInfo.fromHost(host: host),
+        NetworkInfo.fromHost(host: hostWss),
       );
 
       final queryApi = crud.QueryApi(queryClient);

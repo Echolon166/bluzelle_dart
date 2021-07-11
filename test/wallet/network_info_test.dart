@@ -4,17 +4,18 @@ import 'package:test/test.dart';
 // Project imports:
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/wallet/export.dart';
+import '../test_helpers.dart';
 
 void main() {
   group('network_info_test:', () {
     group('NetworkInfo', () {
       final networkInfo = NetworkInfo.fromHost(
-        host: 'https://client.sentry.testnet.private.bluzelle.com',
+        host: hostHttps,
       );
 
       test('fromHost and fromHostAndPort works properly.', () {
         final networkInfoDifferentPort = NetworkInfo.fromHostAndPort(
-          host: 'https://client.sentry.testnet.private.bluzelle.com',
+          host: hostHttps,
           port: 1555,
         );
 
@@ -30,7 +31,7 @@ void main() {
 
       test('toString works properly.', () {
         final expectedString =
-            'NetworkInfo { bech32Hrp: bluzelle, tendermintRpcInfo: TendermintRpcInfo { host: https://client.sentry.testnet.private.bluzelle.com, port: 26657 } }';
+            'NetworkInfo { bech32Hrp: bluzelle, tendermintRpcInfo: TendermintRpcInfo { host: $hostHttps, port: $port } }';
 
         expect(networkInfo.toString(), equals(expectedString));
       });

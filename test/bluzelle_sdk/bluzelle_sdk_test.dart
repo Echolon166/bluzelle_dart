@@ -17,7 +17,7 @@ void main() {
         sdk = bluzelle(
           mnemonic:
               'bless fury misery volume bullet worry easy leisure hurdle devote depend donkey name helmet umbrella quiz local transfer food social lonely candy fat ask',
-          host: host,
+          host: hostWss,
           port: port,
           maxGas: 100000000,
           gasPrice: 0.002,
@@ -25,7 +25,7 @@ void main() {
       });
 
       test('.url works properly.', () {
-        expect(sdk.db.url, equals('$host:$port'));
+        expect(sdk.db.url, equals('$hostWss:$port'));
       });
 
       test('.address works properly.', () {
@@ -51,7 +51,7 @@ void main() {
       setUp(() {
         sdk = bluzelle(
           mnemonic: mnemonicHelper.nextMnemonic,
-          host: host,
+          host: hostWss,
           port: port,
           maxGas: 100000000,
           gasPrice: 0.002,

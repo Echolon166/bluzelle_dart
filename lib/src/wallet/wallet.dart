@@ -10,7 +10,7 @@ import 'package:pointycastle/export.dart' as pc;
 // Project imports:
 import 'package:bluzelle_dart/src/types/export.dart';
 import 'package:bluzelle_dart/src/utils/export.dart';
-import 'package:bluzelle_dart/src/wallet/bech32_encoder.dart';
+import 'package:bluzelle_dart/src/wallet/_bech32_encoder.dart';
 import 'package:bluzelle_dart/src/wallet/export.dart';
 
 /// Represents a wallet which contains the hex address, the hex private key

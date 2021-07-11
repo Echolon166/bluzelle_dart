@@ -10,6 +10,7 @@ import 'package:protobuf/protobuf.dart' as pb;
 import 'package:web_socket_channel/web_socket_channel.dart' as ws;
 
 // Project imports:
+import 'package:bluzelle_dart/src/tendermint_rpc/_http_channel.dart';
 import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
 import 'package:bluzelle_dart/src/types/export.dart';
 import 'package:bluzelle_dart/src/utils/export.dart';
@@ -34,13 +35,12 @@ class Tendermint34Client extends pb.RpcClient {
     required String host,
     required int port,
   }) {
-    var url = '$host:${port.toString()}/websocket';
+    final url = '$host:${port.toString()}';
 
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      url = url.replaceFirst(RegExp(r'http'), 'ws');
-    }
+    final socket = (url.startsWith('ws://') || url.startsWith('wss://'))
+        ? ws.WebSocketChannel.connect(Uri.parse('$url/websocket'))
+        : HttpChannel.connect(Uri.parse(url));
 
-    final socket = ws.WebSocketChannel.connect(Uri.parse(url));
     final client = rpc.Client(socket.cast<String>());
 
     // Subscribes to the input stream.

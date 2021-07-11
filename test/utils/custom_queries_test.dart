@@ -12,7 +12,7 @@ void main() {
 
     setUpAll(() {
       tendermint34Client = Tendermint34Client.connect(
-        host: host,
+        host: hostWss,
         port: port,
       );
     });

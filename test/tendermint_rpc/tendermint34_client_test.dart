@@ -18,7 +18,7 @@ void main() {
     group('Tendermint34Client.connect()', () {
       test('HTTPS host works properly.', () {
         final tendermint34Client = Tendermint34Client.connect(
-          host: 'https://client.sentry.testnet.private.bluzelle.com',
+          host: hostHttps,
           port: 26657,
         );
 
@@ -35,7 +35,7 @@ void main() {
 
       test('WSS host works properly.', () {
         final tendermint34Client = Tendermint34Client.connect(
-          host: 'wss://client.sentry.testnet.private.bluzelle.com',
+          host: hostWss,
           port: 26657,
         );
 
@@ -56,7 +56,7 @@ void main() {
 
       setUpAll(() {
         tendermint34Client = Tendermint34Client.connect(
-          host: 'https://client.sentry.testnet.private.bluzelle.com',
+          host: hostHttps,
           port: 26657,
         );
       });
@@ -121,7 +121,7 @@ void main() {
                 'need seat viable busy fancy guitar able beach awkward click silk sugar walk large into fetch lake rice begin wrong swap area vanish token'
                     .split(' '),
             networkInfo: NetworkInfo.fromHost(
-              host: 'wss://client.sentry.testnet.private.bluzelle.com',
+              host: hostWss,
             ),
           );
 

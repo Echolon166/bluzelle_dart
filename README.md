@@ -56,8 +56,9 @@ void main() {
 
 #### Websockets vs. HTTPS
 
-- Currently the **sdk only supports websocket connections** to the Bluzelle testnet.
-- If an https host is given, it will be configured to connect to the Tendermint websocket endpoint (e.g. `https://client.sentry.testnet.private.bluzelle.com` will be converted to `wss://client.sentry.testnet.private.bluzelle.com`).
+- Currently the sdk supports both websocket and https connections to the Bluzelle testnet.
+- Use **websockets** (wss://client.sentry.testnet.private.bluzelle.com) for greater performance.
+- For **https** pass the host https://client.sentry.testnet.private.bluzelle.com to the bluzelle constructor.
 
 ## Usage
 

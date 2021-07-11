@@ -19,7 +19,8 @@ class MnemonicHelper {
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 Random _rnd = Random();
 
-String host = 'wss://client.sentry.testnet.private.bluzelle.com';
+String hostWss = 'wss://client.sentry.testnet.private.bluzelle.com';
+String hostHttps = 'https://client.sentry.testnet.private.bluzelle.com';
 int port = 26657;
 
 String get dateNow => DateTime.now().millisecondsSinceEpoch.toString();

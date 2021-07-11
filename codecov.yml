@@ -1,18 +1,20 @@
 # https://docs.codecov.io/docs/commit-status
 coverage:
+  range: 50..90 # coverage lower than 50 is red, higher than 90 green, between color code
+
   status:
     project:
       default:
         # basic
-        target: 0%
-        threshold: 0%
-        base: 0%
+        target: auto # auto % coverage target
+        threshold: 10% # allow for 10% reduction of coverage without failing
         # advanced
         branches: null
         if_no_uploads: error
         if_not_found: success
         if_ci_failed: error
-        only_pulls: false
         flags: null
         paths: null
+
+    # do not run coverage on patch nor changes
     patch: false
