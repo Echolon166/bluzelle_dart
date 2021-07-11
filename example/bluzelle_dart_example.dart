@@ -202,7 +202,7 @@ Future<void> main() async {
   final sdk = bluzelle(
     mnemonic:
         'switch wing oven chat cargo smile hello broken fluid puzzle endorse family divorce boat viable mutual film steel future casino economy lens december roast',
-    host: 'wss://client.sentry.testnet.private.bluzelle.com',
+    host: 'https://client.sentry.testnet.private.bluzelle.com',
     port: 26657,
     maxGas: 100000000,
     gasPrice: 0.002,
@@ -336,6 +336,4 @@ Future<void> main() async {
         QueryKeyValuesRequest(uuid: uuid),
       )
       .then((value) => print('Querying all key-values in uuid: $uuid: $value'));
-
-  // TODO: close connections
 }

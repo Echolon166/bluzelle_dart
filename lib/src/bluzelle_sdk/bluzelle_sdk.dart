@@ -23,6 +23,9 @@ class BluzelleSdk {
   });
 }
 
+/// Main user facing function which will be used by the user to initiate
+///   everything required, and to do queries & send transactions via
+///   returned [BluzelleSdk].
 BluzelleSdk bluzelle({
   required String? mnemonic,
   required String host,
@@ -30,6 +33,7 @@ BluzelleSdk bluzelle({
   required int maxGas,
   required double gasPrice,
 }) {
+  // Connect to the Tendermint RPC.
   final networkInfo = port == null
       ? NetworkInfo.fromHost(host: host)
       : NetworkInfo.fromHostAndPort(
@@ -37,11 +41,13 @@ BluzelleSdk bluzelle({
           port: port,
         );
 
+  // Derive the wallet from the mnemonic.
   final wallet = Wallet.derive(
     mnemonic: mnemonic?.split(' ') ?? [],
     networkInfo: networkInfo,
   );
 
+  // Construct fee variable from given maxGas and gasPrice.
   final fee = Fee();
   fee.gasLimit = maxGas.toInt64();
   fee.amount.add(
@@ -51,6 +57,7 @@ BluzelleSdk bluzelle({
     ),
   );
 
+  // Create different sdk's using their respective Api's.
   final DatabaseSdk databaseSdk = sdk<crud.QueryApi, crud.MsgApi>(
     wallet: wallet,
     fee: fee,

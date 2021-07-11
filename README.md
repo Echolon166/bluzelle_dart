@@ -994,14 +994,26 @@ Returns: Future\<QuerySearchResponse\>
 
 \*\* PagingResponse {nextKey: String, total: Int64}
 
-## TODO REST ## TODO REST ## TODO REST ## TODO REST ## TODO REST ## TODO REST ## TODO REST ## TODO REST ## TODO REST ## TODO REST ## TODO REST
-
 ## Development
 
-To download required Protobuf files and generate their implementations => `./tool/generate_proto.sh`
+- To rebuild the generated code (eg. for JSON serialisation):
 
-If you want to include new Protobuf files, you can add them to the => `./tool/get_proto.sh`
+```shell
+dart pub run build_runner build
+```
 
-To rebuild the generated code (e.g. for JSON serialisation) => `dart pub run build_runner build`
+- To download the required Protobuf files and generate their implementations:
 
-To run the tests => `dart pub run test test/`
+```shell
+./tool/generate_proto.sh
+```
+
+Note: If you want to include new Protobuf files, you can add them to the [get_proto.sh](tool/get_proto.sh).
+
+- To run the tests:
+
+```shell
+dart pub run test test/
+```
+
+Note: All of the tests are getting run after every commit via github actions.
