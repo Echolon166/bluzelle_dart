@@ -1,9 +1,8 @@
 // Project imports:
 import 'package:bluzelle/src/clients/export.dart';
+import 'package:bluzelle/src/codec/cosmos/auth/v1beta1/export.dart' as auth;
 import 'package:bluzelle/src/tendermint_rpc/export.dart';
 import 'package:bluzelle/src/types/export.dart';
-
-import 'package:bluzelle/src/codec/cosmos/auth/v1beta1/export.dart' as auth;
 
 /// Reads the account data and retrieves the details of the account
 ///   having the given [address] from it.

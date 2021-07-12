@@ -57,8 +57,9 @@ void main() {
 #### Websockets vs. HTTPS
 
 - Currently the sdk supports both websocket and https connections to the Bluzelle testnet.
-- Use **websockets** (wss://client.sentry.testnet.private.bluzelle.com) for greater performance.
 - For **https** pass the host https://client.sentry.testnet.private.bluzelle.com to the bluzelle constructor.
+- Use **websockets** (wss://client.sentry.testnet.private.bluzelle.com) for greater performance. Call sdk.db.close()
+  - Websocket connections can run indefinitely if not closed properly so, be sure to call `sdk.db.close()` at the very end of your application to shut them down properly.
 
 ## Usage
 

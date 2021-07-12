@@ -9,6 +9,7 @@ class Sdk<Q, M> {
   String address;
   String url;
   Function withTransactions;
+  Function close;
 
   Sdk({
     required this.q,
@@ -16,6 +17,7 @@ class Sdk<Q, M> {
     required this.address,
     required this.url,
     required this.withTransactions,
+    required this.close,
   });
 }
 
@@ -31,11 +33,21 @@ Sdk<Q, M> sdk<Q, M>({
     fee: fee,
   );
 
+  //  Shuts down all RPC connections.
+  //  Websocket connections can run indefinitely if not closed properly so be
+  //    sure to call .close() at the end of the file.
+  //  HTTP connections can shut themselves down so not required for them.
+  void close() {
+    qClient.close();
+    mClient.close();
+  }
+
   return Sdk<Q, M>(
     q: qApi(qClient),
     tx: mApi(mClient),
     address: wallet.bech32Address,
     url: wallet.networkInfo.url,
     withTransactions: mClient.invokeBatch,
+    close: close,
   );
 }

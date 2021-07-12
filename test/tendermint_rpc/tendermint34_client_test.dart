@@ -118,7 +118,7 @@ void main() {
         test('works properly.', () {
           final wallet = Wallet.derive(
             mnemonic:
-                'need seat viable busy fancy guitar able beach awkward click silk sugar walk large into fetch lake rice begin wrong swap area vanish token'
+                'nominee use purpose pulse congress noble force aware defy coil banner empower rose rebuild fiber kiwi sustain join gadget gravity conduct wolf scorpion sorry'
                     .split(' '),
             networkInfo: NetworkInfo.fromHost(
               host: hostWss,
