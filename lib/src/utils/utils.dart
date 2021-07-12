@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:protobuf/protobuf.dart' as pb;
 
 // Project imports:
-import 'package:bluzelle_dart/src/types/export.dart';
+import 'package:bluzelle/src/types/export.dart';
 
 /// Indicates that future is intentionally not await-ed.
 void unawaited(Future<void>? future) {}

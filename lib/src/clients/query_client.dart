@@ -2,8 +2,8 @@
 import 'package:protobuf/protobuf.dart' as pb;
 
 // Project imports:
-import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
-import 'package:bluzelle_dart/src/wallet/export.dart';
+import 'package:bluzelle/src/tendermint_rpc/export.dart';
+import 'package:bluzelle/src/wallet/export.dart';
 
 /// [QueryClient] acts as a bridge between custom [pb.GeneratedMessage] type
 ///   query requests and [Tendermint34Client.abciQuery].

@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
+import 'package:bluzelle/src/tendermint_rpc/export.dart';
 
 void main() {
   group('responses_test:', () {

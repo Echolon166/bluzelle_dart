@@ -2,7 +2,7 @@
 import 'package:fixnum/fixnum.dart' as fixnum;
 
 // Project imports:
-import 'package:bluzelle_dart/src/types/export.dart';
+import 'package:bluzelle/src/types/export.dart';
 
 /// [SignatureV2] is a convenience type that is easier to use in application
 ///   logic than the protobuf [SignerInfo]'s and raw signature bytes.

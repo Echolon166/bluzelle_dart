@@ -8,7 +8,7 @@ import 'package:convert/convert.dart' show hex;
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/wallet/export.dart';
+import 'package:bluzelle/src/wallet/export.dart';
 
 void main() {
   group('wallet_test:', () {

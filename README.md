@@ -6,11 +6,11 @@ Dart package for interfacing with the Bluzelle database service, modelled after 
 
 ## Installation
 
-`bluzelle_dart` is currently not available on [pub.dev](https://pub.dev) but you can use it by referencing this repository in your `pubspec.yaml` as shown below:
+`bluzelle` is currently not available on [pub.dev](https://pub.dev) but you can use it by referencing this repository in your `pubspec.yaml` as shown below:
 
 ```yaml
 dependencies:
-  bluzelle_dart:
+  bluzelle:
     git: https://github.com/Echolon166/bluzelle_dart.git
 ```
 
@@ -18,7 +18,7 @@ You can optionally pin your dependency to a specific commit, branch, or tag to a
 
 ```yaml
 dependencies:
-  bluzelle_dart:
+  bluzelle:
     git:
       url: https://github.com/Echolon166/bluzelle_dart.git
       ref: some-branch
@@ -39,7 +39,7 @@ In order to connect your instance to the Bluzelle testnet, you can get a new acc
 Once you have your account and the package, you can create an sdk instance with:
 
 ```dart
-import 'package:bluzelle_dart/bluzelle_dart.dart';
+import 'package:bluzelle/bluzelle.dart';
 
 void main() {
   final sdk = bluzelle(

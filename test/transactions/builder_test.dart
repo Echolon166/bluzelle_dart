@@ -5,10 +5,10 @@ import 'dart:convert';
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/codec/crud/export.dart' as crud;
-import 'package:bluzelle_dart/src/transactions/export.dart';
-import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/utils/export.dart';
+import 'package:bluzelle/src/codec/crud/export.dart' as crud;
+import 'package:bluzelle/src/transactions/export.dart';
+import 'package:bluzelle/src/types/export.dart';
+import 'package:bluzelle/src/utils/export.dart';
 
 void main() {
   group('builder_test:', () {

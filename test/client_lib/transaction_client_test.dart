@@ -6,10 +6,10 @@ import 'package:protobuf/protobuf.dart' as pb;
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/clients/export.dart';
-import 'package:bluzelle_dart/src/codec/crud/export.dart' as crud;
-import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/wallet/export.dart';
+import 'package:bluzelle/src/clients/export.dart';
+import 'package:bluzelle/src/codec/crud/export.dart' as crud;
+import 'package:bluzelle/src/types/export.dart';
+import 'package:bluzelle/src/wallet/export.dart';
 import '../test_helpers.dart';
 
 void main() {

@@ -6,7 +6,7 @@ import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/types/export.dart';
+import 'package:bluzelle/src/types/export.dart';
 
 void main() {
   group('ext_test:', () {

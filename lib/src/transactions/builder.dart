@@ -3,8 +3,8 @@ import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:protobuf/protobuf.dart' as pb;
 
 // Project imports:
-import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/utils/export.dart';
+import 'package:bluzelle/src/types/export.dart';
+import 'package:bluzelle/src/utils/export.dart';
 
 /// Allows to easily build and sign a [Tx] that can later be sent over
 ///   the network.

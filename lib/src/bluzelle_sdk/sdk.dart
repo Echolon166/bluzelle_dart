@@ -1,7 +1,7 @@
 // Project imports:
-import 'package:bluzelle_dart/src/clients/export.dart';
-import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/wallet/export.dart';
+import 'package:bluzelle/src/clients/export.dart';
+import 'package:bluzelle/src/types/export.dart';
+import 'package:bluzelle/src/wallet/export.dart';
 
 class Sdk<Q, M> {
   Q q;

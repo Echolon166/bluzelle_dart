@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bluzelle_dart/bluzelle_dart.dart';
+import 'package:bluzelle/bluzelle.dart';
 
 Future<void> populateUuid(BluzelleSdk sdk) async {
   await sdk.db.withTransactions(

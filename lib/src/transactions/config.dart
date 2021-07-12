@@ -1,6 +1,6 @@
 // Project imports:
-import 'package:bluzelle_dart/src/transactions/export.dart';
-import 'package:bluzelle_dart/src/types/export.dart';
+import 'package:bluzelle/src/transactions/export.dart';
+import 'package:bluzelle/src/types/export.dart';
 
 /// [TxConfig] defines an interface a client can utilize to generate an
 ///   application-defined concrete transaction type. The type returned must

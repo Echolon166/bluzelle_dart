@@ -5,10 +5,10 @@ import 'dart:convert';
 import 'package:protobuf/protobuf.dart' as pb;
 
 // Project imports:
-import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
-import 'package:bluzelle_dart/src/transactions/export.dart';
-import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/wallet/export.dart';
+import 'package:bluzelle/src/tendermint_rpc/export.dart';
+import 'package:bluzelle/src/transactions/export.dart';
+import 'package:bluzelle/src/types/export.dart';
+import 'package:bluzelle/src/wallet/export.dart';
 
 /// [TransactionClient] acts as a bridge between custom [pb.GeneratedMessage]
 ///   type transaction requests and [Tendermint34Client.broadcastTxSync].

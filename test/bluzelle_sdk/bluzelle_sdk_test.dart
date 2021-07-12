@@ -2,10 +2,10 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:bluzelle/bluzelle.dart';
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/bluzelle_dart.dart';
 import '../test_helpers.dart';
 
 void main() {

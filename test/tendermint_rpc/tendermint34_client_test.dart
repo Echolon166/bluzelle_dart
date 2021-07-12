@@ -7,10 +7,10 @@ import 'package:test/expect.dart';
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
-import 'package:bluzelle_dart/src/transactions/export.dart';
-import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/wallet/export.dart';
+import 'package:bluzelle/src/tendermint_rpc/export.dart';
+import 'package:bluzelle/src/transactions/export.dart';
+import 'package:bluzelle/src/types/export.dart';
+import 'package:bluzelle/src/wallet/export.dart';
 import '../test_helpers.dart';
 
 void main() {

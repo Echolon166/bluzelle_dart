@@ -2,13 +2,12 @@
 import 'package:protobuf/protobuf.dart' as pb;
 
 // Project imports:
-import 'package:bluzelle_dart/src/bluzelle_sdk/export.dart';
-import 'package:bluzelle_dart/src/codec/crud/export.dart' as crud;
-import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/wallet/export.dart';
+import 'package:bluzelle/src/bluzelle_sdk/export.dart';
+import 'package:bluzelle/src/codec/crud/export.dart' as crud;
+import 'package:bluzelle/src/types/export.dart';
+import 'package:bluzelle/src/wallet/export.dart';
 
-import 'package:bluzelle_dart/src/codec/cosmos/bank/v1beta1/export.dart'
-    as bank;
+import 'package:bluzelle/src/codec/cosmos/bank/v1beta1/export.dart' as bank;
 
 typedef BankSdk = Sdk<bank.QueryApi, bank.MsgApi>;
 typedef DatabaseSdk = Sdk<crud.QueryApi, crud.MsgApi>;

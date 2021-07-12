@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/utils/export.dart';
+import 'package:bluzelle/src/utils/export.dart';
 
 part 'responses.g.dart';
 

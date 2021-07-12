@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
+import 'package:bluzelle/src/tendermint_rpc/export.dart';
 
 part 'network_info.g.dart';
 

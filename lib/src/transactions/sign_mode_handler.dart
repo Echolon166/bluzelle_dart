@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:bluzelle_dart/src/types/export.dart';
+import 'package:bluzelle/src/types/export.dart';
 
 /// [SignModeHandler] defines a interface to be implemented by types which
 ///   will handle [SignMode]'s by generating sign bytes from a [Tx] and

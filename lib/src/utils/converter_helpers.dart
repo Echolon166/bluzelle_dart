@@ -7,7 +7,7 @@ import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
-import 'package:bluzelle_dart/src/types/export.dart';
+import 'package:bluzelle/src/types/export.dart';
 
 /// Non-nullable Converters
 

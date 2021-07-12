@@ -10,10 +10,10 @@ import 'package:protobuf/protobuf.dart' as pb;
 import 'package:web_socket_channel/web_socket_channel.dart' as ws;
 
 // Project imports:
-import 'package:bluzelle_dart/src/tendermint_rpc/_http_channel.dart';
-import 'package:bluzelle_dart/src/tendermint_rpc/export.dart';
-import 'package:bluzelle_dart/src/types/export.dart';
-import 'package:bluzelle_dart/src/utils/export.dart';
+import 'package:bluzelle/src/tendermint_rpc/_http_channel.dart';
+import 'package:bluzelle/src/tendermint_rpc/export.dart';
+import 'package:bluzelle/src/types/export.dart';
+import 'package:bluzelle/src/utils/export.dart';
 
 /// [Tendermint34Client] is to interact with Tendermint RPC via defined requests.
 /// If the request is a [pb.GeneratedMessage] type request, it will be send to
