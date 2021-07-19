@@ -4,6 +4,8 @@
 
 Dart package for interfacing with the Bluzelle database service, modelled after [@bluzelle/sdk-js](https://github.com/bluzelle/curium/tree/stargate/sdk/ts).
 
+Video Demo: https://youtu.be/PR5JIAzcqrU
+
 ## Installation
 
 `bluzelle` is currently not available on [pub.dev](https://pub.dev) but you can use it by referencing this repository in your `pubspec.yaml` as shown below:
